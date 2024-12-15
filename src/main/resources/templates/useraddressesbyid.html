@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的地址</title>
+    <link rel="stylesheet" th:href="@{/css/useraddressesbyid.css}">
+</head>
+<body>
+<code class="html"><button onclick="goBack()">返回</button></code>
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>
+<div id="addaddress">
+    <a th:href="@{/toaddaddress}">添加地址</a><br><br>
+</div>
+<div id="goods_list">
+    <table class="tablecss">
+        <tr>
+            <th>序号</th>
+            <th>联系人</th>
+            <th>联系地址</th>
+            <th>联系电话</th>
+            <th>关联用户</th>
+            <th>操作</th>
+        </tr>
+        <tr id="item" th:each="useraddress:${page.list}">
+            <td th:text="${useraddress.id}"></td>
+            <td th:text="${useraddress.username}"></td>
+            <td id="address" th:text="${useraddress.address}"></td>
+            <td id="phone" th:text="${useraddress.phone}"></td>
+            <td th:text="${useraddress.userid}"></td>
+            <td id="table_operation">
+                <a class="button_update" th:href="@{'/toupdateuseraddressU/'+${useraddress.id}}">编辑</a>
+                <a class="button_delete" th:href="@{'/deleteUserAddressU/'+${useraddress.id}}">删除</a>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <a th:if="${not page.isFirstPage}" th:href="@{/useraddresses(start=${page.pageNum - 1})}">上一页</a>
+    &nbsp;&nbsp;总页数:<span th:text="${page.pages}"></span>&nbsp;
+    &nbsp;&nbsp;当前页:<span th:text="${page.pageNum}"></span>&nbsp;
+    &nbsp;&nbsp;总记录数:<span th:text="${page.total}"></span>&nbsp;
+    &nbsp;&nbsp;当前页记录数:<span th:text="${page.size}"></span>&nbsp;
+    <a th:if="${not page.isLastPage}" th:href="@{/useraddresses(start=${page.pageNum + 1})}">下一页</a>
+</div>
+</body>
+<script th:src="@{/js/useraddresslist.js}"></script>
+<script src="js/jquery-3.1.0.min.js"></script>
+</html>

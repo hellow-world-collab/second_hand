@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title id="title">我的求购</title>
+    <link rel="stylesheet" th:href="@{/css/myorders.css}">
+</head>
+<body>
+    <header>
+        <div id="top_div">
+
+            <!--          头部左盒子  //主标志往左边靠-->
+            <div id="left_div">
+                <div id="main_mark">
+                    <img class="logo" th:src="@{/img/logo.png}" alt="logo">
+                </div>
+            </div>
+            <!--          头部左盒子  //主标志往左边靠-->
+
+
+
+            <!--导航栏部分-->
+            <div id="nav_div">
+
+                <ul id="nav_ul">
+                    <li>热卖专区</li>
+                    <li>社区广场</li>
+                    <li>求购专区</li>
+                    <li>二手交易圈</li>
+<!--                    <li>系统公告</li>-->
+                </ul>
+            </div>
+            <!--导航栏部分-->
+
+            <!--      头部右盒子      //信息和个人中心往右边靠-->
+            <div id="right_div">
+
+                <!--                聊天信息-->
+<!--                <div id="chat_div">-->
+<!--                    <span>-->
+<!--                        <img th:src="@{/icon/通信消息.png}" alt="">-->
+<!--                    </span>-->
+<!--                    聊天信息-->
+
+<!--                </div>-->
+                <!--                聊天信息-->
+
+                <!--                个人中心-->
+                <div id="personal_center_div">
+                    <span>
+                       <img th:src="${session.loginUser.imgurl}" alt="头像">
+                        <ul id="dropdown_nav">
+                                <div id="conule"></div>
+                                <li class="li">个人中心</li>
+                                <li class="li">我的订单</li>
+                                <li class="li"><a  th:href="@{/myproducts}">我的商品</a></li>
+                                <li class="li"><a  th:href="@{/Myposts}">我的帖子</a></li>
+                                <li class="li">我的求购</li>
+                                <li class="li"><a  th:href="@{/useraddressesU}">我的地址</a></li>
+
+                                <li class="li">退出登录</li>
+                        </ul>
+
+                    </span>
+                    <span th:text="${session.loginUser.username}"></span>
+                    <img th:src="@{/icon/angle-down.png}" alt="">
+
+                </div>
+                <!--                个人中心-->
+
+
+            </div>
+
+
+            <!--      头部右盒子      //信息和个人中心往右边靠-->
+        </div>
+
+    </header>
+
+
+
+    <section>
+        <div id="s_left_div"></div>
+
+
+
+
+        <div id="s_center_div">
+            <div id="top_button">
+                <span id="buy_span">发布求购</span>
+<!--                <span id="sale_span">我的售出订单</span>-->
+            </div>
+            <div id="orders_list">
+                <table>
+                    <tr>
+                        <th>序号</th>
+                        <th>标题</th>
+                        <th>介绍</th>
+                        <th>地址</th>
+                        <th>种类</th>
+<!--                        <th>图片</th>-->
+<!--                        <th>状态</th>-->
+<!--                        <th>发布时间</th>-->
+                        <th>是否解决</th>
+
+
+                        <th colspan="2">操作</th>
+                    </tr>
+                    <tr th:each="order:${page.list}">
+                        <td  th:text="${order.id}">222</td>
+                        <td  th:text="${order.title}">222</td>
+                        <td  th:text="${order.content}">222</td>
+                        <td  th:text="${order.address}">222</td>
+                        <td  th:text="${order.type}">222</td>
+<!--                        <td><img th:src="@{/images/素材-39.png}" alt=""></td>-->
+                        <td th:text="${order.state}">444</td>
+<!--                        <td th:text="${order.commodity_price}">5555</td>-->
+
+
+                    </tr>
+                </table>
+                <div id="page_button">
+                    <div id="order_num" th:text="'共'+${page.total}+'条'">共条</div>
+                    <input type="hidden" th:value="${page.pages}" id="page_total">
+                    <input type="hidden" th:value="${page.pageNum}" id="page_num">
+                    <a th:href="@{/myTobuy(start=${page.pageNum -1})}" id="left_a">
+                        <div id="left_button"><img th:src="@{/icon/angle-left.png}" alt=""></div>
+                    </a>
+                    <div id="center_page_button">
+                    <ul id="append_li">
+<!--                        <li class="pageli">1</li>-->
+
+
+                    </ul>
+                    </div>
+                    <a  th:href="@{/myTobuy(start=${page.pageNum+1})}" id="right_a">
+                        <div id="right_button"><img th:src="@{/icon/angle-right.png}" alt=""></div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div id="s_right_div"></div>
+    </section>
+
+    <footer>
+
+    </footer>
+
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.7.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/myorders.js}"></script>
+<script>
+    $("#dropdown_nav li:nth-child(3)").click(function (){
+        window.location.href='/myorders';
+    });
+    $("#buy_span").click(function (){
+        // window.location.href="/saleorders";
+        // console.log("草泥马");
+    });
+    $("#nav_ul li:nth-child(1)").click(function (){
+        window.location.href='/index';
+    })
+    // $("#nav_ul li:nth-child(2)").click(function (){
+    //     window.location.href='/index';
+    // })
+    // $("#nav_ul li:nth-child(3)").click(function (){
+    //     window.location.href='/index';
+    // })
+    // $("#nav_ul li:nth-child(4)").click(function (){
+    //     window.location.href='/index';
+    // })
+    $("#nav_ul li:nth-child(5)").click(function (){
+
+    })
+
+</script>
+
+</html>

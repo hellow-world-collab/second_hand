@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.orders_Mapper">
+    <select id="select_commoditydetail" parameterType="int" resultMap="select_commoditydetail_Result">
+        SELECT
+            p.id,
+            p.name,
+            p.imgurl,
+            p.introduce,
+            p.price,
+            p.address,
+            u.username,
+            p.time
+        FROM
+            product p
+                JOIN users u ON u.id=p.user_id
+        where
+            p.id=#{id}
+
+    </select>
+    <resultMap id="select_commoditydetail_Result" type="CommodityDetail">
+        <id property="commodity_id" column="id"></id>
+        <result property="commodity_name" column="name"></result>
+        <result property="commodity_imgurl" column="imgurl"></result>
+        <result property="commodity_introduce" column="introduce"></result>
+        <result property="commodity_price" column="price"></result>
+        <result property="commodity_send_address" column="address"></result>
+        <result property="commodity_saler" column="username"></result>
+        <result property="commodity_pub_time" column="time"></result>
+    </resultMap>
+</mapper>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title>二手交易市场</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+
+            height: 100vh;
+            margin: 0;
+        }
+        .liebiao{
+
+            background-color: #ffffff;
+            border-radius: 10px;
+            margin: 0 1%;
+
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            /*overflow: hidden;*/
+            font-family: Arial, sans-serif;
+            /*border-spacing: 0px;*/
+            table-layout: fixed;
+            /* margin: 20px; */
+        }
+        .styled-table th,
+        .styled-table td {
+            /*padding: 12px 15px;*/
+            text-align: center;
+            width:100px;
+            height:105px;
+            overflow: hidden;
+            /*text-overflow: ellipsis;*/
+            white-space: nowrap;
+        }
+        .styled-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #333333;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .styled-table td {
+            background-color: #ffffff;
+            color: #666666;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .styled-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* 增强效果 */
+        .styled-table th:first-child,
+        .styled-table td:first-child {
+            text-align: left;
+        }
+
+        .edit{
+            float:left;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .delete{
+            float:left;
+            background-color: #f44336; /* Red */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .table{
+            width: 90%;
+            margin: 0 auto;
+        }
+        .fenye{
+            width: 90%;
+            margin: 0 auto;
+            padding: 0 30%;
+        }
+        .img1{
+            height: 25px;
+            width: 25px;
+        }
+        .img2{
+            width: 100px;
+            height: 100px;
+        }
+        /*  */
+        /* 头部 */
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* display: flex; */
+            flex-direction: column;
+            gap: 15px;
+            margin: 1% ;
+        }
+
+        /* 表单样式 */
+        .search-form {
+            /* display: flex; */
+            gap: 10px;
+            align-items: center;
+        }
+
+
+
+        /* 输入框样式 */
+        .search-input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        /* 提交按钮样式 */
+        .search-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 批量删除按钮样式 */
+        .delete-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #dc3545;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1%;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div class="container">
+    <form id="searchForm" action="/searchPostsByStr" method="post" class="search-form">
+
+        <input type="text" name="searchStr" id="searchStr" class="search-input" placeholder="请输入关键字查询">
+        <input type="submit" value="模糊搜索" class="search-button">
+    </form>
+    <input id="dels" type="button" value="批量删除" class="delete-button" onclick="dels()">
+</div>
+
+<div class="liebiao">
+    <div class="table">
+        <table class="styled-table">
+            <tr>
+                <td><b>选择</b></td>
+                <td><b>序号</b></td>
+                <td><b>物品名字</b></td>
+                <td><b>价格</b></td>
+                <td><b>图片</b></td>
+                <td><b>圈子</b></td>
+                <td><b>时间</b></td>
+                <td><b>用户ID</b></td>
+                <td><b>标题</b></td>
+                <td><b>简介</b></td>
+                <td><b>类型</b></td>
+                <td><b>功能</b></td>
+            </tr>
+            <tr th:each="post:${page.list}">
+                <td><input type="checkbox" class="ids" th:value="${post.id}"></td>
+                <td th:text="${post.id}"></td>
+                <td th:text="${post.name}"></td>
+                <td th:text="${post.price}"></td>
+                <td >
+                    <img class="img2" th:src="${post.imgurl}" alt="未上传图片">
+                </td>
+                <td th:text="${post.type}"></td>
+                <td th:text="${#dates.format(post.time,'YYYY-MM-dd')}"></td>
+                <td th:text="${post.user_id}"></td>
+                <td th:text="${post.title}"></td>
+                <td th:text="${post.introduce}"></td>
+                <td th:text="${post.state}"></td>
+                <td>
+                    <a th:href="@{'/toupdatepost/'+${post.id}}" class="edit">编辑</a>
+                    <a  th:href="@{'/deletePost/'+${post.id}}" class="delete">删除</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="fenye">
+    <a th:if="${not page.isFirstPage}" th:href="@{/posts(start=${page.pageNum - 1})}"><img th:src="@{/img/上一页.png}" class="img1" alt="上一页"></a>
+    总页数:<span th:text="${page.pages}"></span>&nbsp;
+    当前页:<span th:text="${page.pageNum}"></span>&nbsp;
+    总记录数:<span th:text="${page.total}"></span>&nbsp;
+    当前页记录数:<span th:text="${page.size}"></span>&nbsp;
+    <a th:if="${not page.isLastPage}" th:href="@{/posts(start=${page.pageNum+1})}"><img th:src="@{/img/下一页.png}" class="img1" alt="下一页"></a>
+</div>
+
+
+<script th:src="@{/js/jquery-3.1.0.min.js}"></script>
+<script>
+    function dels(){
+        if(confirm("确定删除所选帖子吗？")){
+            var ids="";
+
+            $(".ids").each(
+                function (i,e){
+                    if($(e).is(":checked")){
+                        var id=$(e).val();
+                        ids+=id+",";
+                    }
+                }
+            );
+            if(ids.length==0){
+                alert("未选择任何图书,请选择要删除的帖子！");
+            }else{
+
+                ids=ids.substr(0,ids.length-1);
+                location.href="deletePosts?id="+ids;//构造出类似deleteBooks?id=1,2,3这样的URL,后台可用数组接收
+
+            }
+        }
+    }
+</script>
+<script>
+    window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem('scrollPosition', window.scrollY.toString());
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        var scrollPosition = sessionStorage.getItem('scrollPosition');
+        if (scrollPosition !== null) {
+            window.scrollTo(0, parseInt(scrollPosition));
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectElement = document.getElementById('mySelect');
+
+        selectElement.addEventListener('change', function() {
+            // 获取当前选中的选项的值
+            const selectedValue = this.value;
+
+            // 根据不同的选项值执行不同的操作
+            switch (selectedValue) {
+                case '#sqtz':
+                    // 执行你想要的操作，例如跳转到指定的页面
+                    window.location.href = 'page1.html';
+                    break;
+                case '#sqtz1':
+                    // 执行你想要的操作，例如跳转到另一个页面
+                    window.location.href = 'page2.html';
+                    break;
+                default:
+                    // 默认情况，可以什么都不做或者进行其他操作
+                    break;
+            }
+        });
+    });
+</script>
+</body>
+</html>

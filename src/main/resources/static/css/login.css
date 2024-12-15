@@ -1,0 +1,71 @@
+@charset "utf-8";
+/* CSS Document */
+body{font-size:18px; font-family:"微软雅黑"; 
+	background:url("../img/login.jpg") no-repeat ;
+	background-size:cover;
+/*	background: black;*/
+	color:#FFF;}       /*background:url(images/timg.jpg) no-repeat top center;*/
+
+form{
+	width:420px;
+	height:240px;
+	padding-top:20px;
+    margin: 250px auto;                /*使表单在浏览器中居中*/
+	background:rgba(255,255,255,0.1);                            /*为表单添加背景颜色*/
+	border-radius:20px;
+	border:1px solid rgba(255,255,255,0.3);
+	} 
+p{
+	margin-top:15px; 
+	text-align:center;
+ } 
+p span{
+	width:60px;
+	display:inline-block; 
+	text-align:right;
+	} 
+#username,#password{                                   /*对文本框设置共同的宽、高、边框、内边距*/
+	width:165px; 
+	height:18px; 
+	border:1px solid rgba(255,255,255,0.3);
+    padding:2px 2px 2px 22px; 
+	border-radius:5px;
+	color:#FFF;
+	}
+#username{                                         /*定义第一个文本框的背景、文本颜色*/
+	background:url("../img/3.png") no-repeat 5px center rgba(255,255,255,0.1);
+
+}
+#password{                                        /*定义第二个文本框的背景*/
+	background: url("../img/4.png") no-repeat 5px center rgba(255,255,255,0.1);
+}
+#role{
+	position:relative;
+	width:150px;
+	height:24px;
+	font-size: 18px;
+	left:5%;
+	top:40%;
+}
+#zhuce{
+	display: inline-block;
+	width: 190px;
+	height:25px;
+	text-align:center;
+	text-decoration: none;
+	background: #57b2c9;
+	border-radius:10px;
+	margin-left:65px;
+	color:#FFF;
+	font-size:15px;
+}
+#btn01{
+	width:190px; 
+	height:25px; 
+	border-radius:3px;                        /*设置圆角边框*/ 
+	border:2px solid #000; 
+	margin-left:65px;
+	background:#57b2c9;
+	color:#FFF;
+	border:none;
+	}     

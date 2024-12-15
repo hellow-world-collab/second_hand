@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.orders_Mapper">
+    <select id="select_Myorders" parameterType="int" resultMap="select_Myorders_Result">
+
+        SELECT o.id             AS order_id,
+               o.number,
+               p.price          AS order_item_price,
+               oi.state         AS order_item_state,
+               p.id             AS product_id,
+               p.name           AS product_name,
+               p.price          AS product_price,
+               p.introduce      AS product_introduce,
+               p.address        AS product_send_address,
+               oi.state         AS product_state,
+               o.userid         AS buyer_id,
+               u.username       AS buyer_username,
+               u.phone          AS buyer_phone,
+               o.saleid         as saler_id,
+               u_saler.username as saler_username,
+               u_saler.phone    as saler_phone,
+               p.address        AS send_address,
+               ua.address       AS receive_address,
+               p.imgurl,
+               o.falge
+        FROM
+--             订单表 o
+orders o
+--                         订单对应表oi 订单id=对比表order_id
+    JOIN ordersitem oi ON o.id = oi.order_id
+--                         产品表 p   产品对应表的product_id=产品的id
+    JOIN product p ON oi.product_id = p.id
+--                         买家用户表u 订单的userid=用户表的id
+    JOIN users u ON o.userid = u.id
+--                         卖家用户表  产品表的user_id=用户表的id
+    JOIN users u_saler ON p.user_id = u_saler.id
+
+    JOIN useraddress ua ON o.useraddressid = ua.id
+        --      要加上！！！
+        WHERE o.userid = #{user_id}
+
+    </select>
+    <resultMap id="select_Myorders_Result" type="orders">
+        <id property="order_id" column="order_id"></id>
+        <result property="order_number" column="number"></result>
+        <result property="order_price" column="order_item_price"></result>
+        <result property="order_state" column="order_item_state"></result>
+        <result property="falge" column="falge"></result>
+        <association property="product" javaType="Product">
+            <id property="id" column="product_id"></id>
+            <result property="name" column="product_name"></result>
+            <result property="price" column="product_price"></result>
+            <result property="introduce" column="product_introduce"></result>
+            <result property="address" column="product_send_address"></result>
+            <result property="state" column="product_state"></result>
+            <result property="imgurl" column="imgurl"></result>
+        </association>
+        <association property="buy_user" javaType="User">
+            <id property="id" column="buyer_id"></id>
+            <result property="username" column="buyer_username"></result>
+            <result property="phone" column="buyer_phone"></result>
+            <result property="address" column="receive_address"></result>
+
+        </association>
+        <association property="sale_user" javaType="User">
+            <id property="id" column="saler_id"></id>
+            <result property="username" column="saler_username"></result>
+            <result property="phone" column="saler_phone"></result>
+            <result property="address" column="send_address"></result>
+        </association>
+    </resultMap>
+
+    <select id="select_saleorders" parameterType="int" resultMap="select_saleorders_Result">
+
+        SELECT o.id             AS order_id,
+               o.number,
+               p.price          AS order_item_price,
+               oi.state         AS order_item_state,
+               p.id             AS product_id,
+               p.name           AS product_name,
+               p.price          AS product_price,
+               p.introduce      AS product_introduce,
+               p.address        AS product_send_address,
+               oi.state         AS product_state,
+               o.userid         AS buyer_id,
+               u.username       AS buyer_username,
+               u.phone          AS buyer_phone,
+               o.saleid         as saler_id,
+               u_saler.username as saler_username,
+               u_saler.phone    as saler_phone,
+               p.address        AS send_address,
+               ua.address       AS receive_address,
+            p.imgurl
+        FROM
+--             订单表 o
+orders o
+--                         订单对应表oi 订单id=对比表order_id
+    JOIN ordersitem oi ON o.id = oi.order_id
+--                         产品表 p   产品对应表的product_id=产品的id
+    JOIN product p ON oi.product_id = p.id
+--                         买家用户表u 订单的userid=用户表的id
+    JOIN users u ON o.userid = u.id
+--                         卖家用户表  产品表的user_id=用户表的id
+    JOIN users u_saler ON p.user_id = u_saler.id
+    JOIN useraddress ua ON o.useraddressid = ua.id
+        -- 要加上
+        WHERE u_saler.id = ${user_id}
+          and o.falge = '0';
+
+    </select>
+    <resultMap id="select_saleorders_Result" type="My_Sale_orders">
+        <id property="order_id" column="order_id"></id>
+        <result property="order_number" column="number"></result>
+        <result property="order_price" column="order_item_price"></result>
+        <result property="order_state" column="order_item_state"></result>
+        <association property="product" javaType="Product">
+            <id property="id" column="product_id"></id>
+            <result property="name" column="product_name"></result>
+            <result property="price" column="product_price"></result>
+            <result property="introduce" column="product_introduce"></result>
+            <result property="address" column="product_send_address"></result>
+            <result property="state" column="product_state"></result>
+            <result property="imgurl" column="imgurl"></result>
+        </association>
+        <association property="buy_user" javaType="User">
+            <id property="id" column="buyer_id"></id>
+            <result property="username" column="buyer_username"></result>
+            <result property="phone" column="buyer_phone"></result>
+            <result property="address" column="receive_address"></result>
+
+        </association>
+        <association property="sale_user" javaType="User">
+            <id property="id" column="saler_id"></id>
+            <result property="username" column="saler_username"></result>
+            <result property="phone" column="saler_phone"></result>
+            <result property="address" column="send_address"></result>
+        </association>
+    </resultMap>
+
+
+    <select id="select_Myorders_rental" parameterType="int" resultMap="select_Myorders_Result_rental">
+
+        SELECT o.id             AS order_id,
+               o.number,
+               r.price_one_day  AS order_item_price,
+               oi.state         AS order_item_state,
+               r.id             AS product_id,
+               r.name           AS product_name,
+               r.price_one_day          AS product_price,
+               r.introduce      AS product_introduce,
+               r.address        AS product_send_address,
+               oi.state         AS product_state,
+               o.userid         AS buyer_id,
+               u.username       AS buyer_username,
+               u.phone          AS buyer_phone,
+               o.saleid         as saler_id,
+               u_saler.username as saler_username,
+               u_saler.phone    as saler_phone,
+               r.address        AS send_address,
+               ua.address       AS receive_address,
+               r.imgurl
+        FROM
+--             订单表 o
+orders o
+--                         订单对应表oi 订单id=对比表order_id
+    JOIN ordersitem oi ON o.id = oi.order_id
+--                         产品表 r   产品对应表的product_id=租赁产品的id
+    JOIN rental_item r ON oi.product_id = r.id
+--                         买家用户表u 订单的userid=用户表的id
+    JOIN users u ON o.userid = u.id
+--                         卖家用户表  产品表的user_id=用户表的id
+    JOIN users u_saler ON r.user_id = u_saler.id
+
+    JOIN useraddress ua ON o.useraddressid = ua.id
+        --      要加上！！！
+        WHERE o.userid = ${user_id}
+          and o.falge = '1';
+
+    </select>
+    <resultMap id="select_Myorders_Result_rental" type="orders">
+        <id property="order_id" column="order_id"></id>
+        <result property="order_number" column="number"></result>
+        <result property="order_price" column="order_item_price"></result>
+        <result property="order_state" column="order_item_state"></result>
+        <association property="product" javaType="Product">
+            <id property="id" column="product_id"></id>
+            <result property="name" column="product_name"></result>
+            <result property="price" column="product_price"></result>
+            <result property="introduce" column="product_introduce"></result>
+            <result property="address" column="product_send_address"></result>
+            <result property="state" column="product_state"></result>
+            <result property="imgurl" column="imgurl"></result>
+        </association>
+        <association property="buy_user" javaType="User">
+            <id property="id" column="buyer_id"></id>
+            <result property="username" column="buyer_username"></result>
+            <result property="phone" column="buyer_phone"></result>
+            <result property="address" column="receive_address"></result>
+
+        </association>
+        <association property="sale_user" javaType="User">
+            <id property="id" column="saler_id"></id>
+            <result property="username" column="saler_username"></result>
+            <result property="phone" column="saler_phone"></result>
+            <result property="address" column="send_address"></result>
+        </association>
+    </resultMap>
+
+
+    <select id="select_saleorders_rental" parameterType="int" resultMap="select_saleorders_Result_rental">
+
+        SELECT o.id             AS order_id,
+               o.number,
+               r.price_one_day         AS order_item_price,
+               oi.state         AS order_item_state,
+               r.id             AS product_id,
+               r.name           AS product_name,
+               r.price_one_day          AS product_price,
+               r.introduce      AS product_introduce,
+               r.address        AS product_send_address,
+               oi.state         AS product_state,
+               o.userid         AS buyer_id,
+               u.username       AS buyer_username,
+               u.phone          AS buyer_phone,
+               o.saleid         as saler_id,
+               u_saler.username as saler_username,
+               u_saler.phone    as saler_phone,
+               r.address        AS send_address,
+               ua.address       AS receive_address,
+            r.imgurl
+        FROM
+--             订单表 o
+orders o
+--                         订单对应表oi 订单id=对比表order_id
+    JOIN ordersitem oi ON o.id = oi.order_id
+--                         产品表 p   产品对应表的product_id=产品的id
+    JOIN rental_item r ON oi.product_id = r.id
+--                         买家用户表u 订单的userid=用户表的id
+    JOIN users u ON o.userid = u.id
+--                         卖家用户表  产品表的user_id=用户表的id
+    JOIN users u_saler ON r.user_id = u_saler.id
+    JOIN useraddress ua ON o.useraddressid = ua.id
+        -- 要加上
+        WHERE u_saler.id = ${user_id}
+          and o.falge = '1';
+
+    </select>
+    <resultMap id="select_saleorders_Result_rental" type="My_Sale_orders">
+        <id property="order_id" column="order_id"></id>
+        <result property="order_number" column="number"></result>
+        <result property="order_price" column="order_item_price"></result>
+        <result property="order_state" column="order_item_state"></result>
+        <association property="product" javaType="Product">
+            <id property="id" column="product_id"></id>
+            <result property="name" column="product_name"></result>
+            <result property="price" column="product_price"></result>
+            <result property="introduce" column="product_introduce"></result>
+            <result property="address" column="product_send_address"></result>
+            <result property="state" column="product_state"></result>
+        </association>
+        <association property="buy_user" javaType="User">
+            <id property="id" column="buyer_id"></id>
+            <result property="username" column="buyer_username"></result>
+            <result property="phone" column="buyer_phone"></result>
+            <result property="address" column="receive_address"></result>
+
+        </association>
+        <association property="sale_user" javaType="User">
+            <id property="id" column="saler_id"></id>
+            <result property="username" column="saler_username"></result>
+            <result property="phone" column="saler_phone"></result>
+            <result property="address" column="send_address"></result>
+        </association>
+    </resultMap>
+
+
+    <!--    根据id删除订单-->
+    <delete id="deleteorder" parameterType="int">
+        delete
+        from orders
+        where id = #{id}
+    </delete>
+
+
+    <insert id="insert">
+        insert into orders(number, userid, saleid, useraddressid, falge)
+        values (#{number}, #{userid}, #{saleid}, #{useraddressid}, #{falge})
+    </insert>
+    <select id="selectidBynumber" resultType="Integer">
+        select id
+        from orders
+        where number = #{number};
+    </select>
+    <insert id="insertordersitem">
+        insert into ordersitem(order_id, product_id)
+        values (#{order_id}, #{product_id});
+    </insert>
+    <update id="updateordersitem">
+        update ordersitem
+        set state="已支付"
+        where order_id = #{order_id}
+    </update>
+</mapper>

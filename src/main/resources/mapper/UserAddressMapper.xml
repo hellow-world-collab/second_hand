@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.UserAddressMapper">
+<!--    查找全部-->
+    <select id="findAllUserAddresses" resultType="useraddress" resultMap="UserWithAdress">
+        SELECT ua.id, ua.address, ua.userid, ua.userphone, u.username
+        FROM useraddress ua
+                 JOIN users u ON ua.userid = u.id
+    </select>
+
+<!--    根据id查找地址-->
+    <select id="findUserAddressById" resultType="useraddress">
+        select *
+        from useraddress
+        where id=#{id}
+    </select>
+
+<!--    添加地址-->
+    <insert id="addAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into useraddress(address,userid,username,userphone)
+        values(#{address},#{userid},#{username},#{phone})
+    </insert>
+
+
+
+<!--    根据id删除-->
+    <delete id="deleteUserAddress" parameterType="int">
+        delete from useraddress where id=#{id}
+    </delete>
+
+    <!--全局模糊搜索-->
+    <select id="searchUserAddressesByStr" parameterType="java.lang.String" resultType="useraddress">
+        select * from useraddress
+        where 1=1
+        <if test="searchStr!=null and searchStr!=''">
+            AND userid like concat('%',#{searchStr},'%')
+            OR address like concat('%',#{searchStr},'%')
+            OR id like concat('%',#{searchStr},'%')
+            OR username like concat('%',#{searchStr},'%')
+            OR userphone like concat('%',#{searchStr},'%')
+        </if>
+    </select>
+
+    <!--批量删除-->
+    <delete id="deleteUserAddresses">
+        delete from useraddress where id in
+            <foreach collection="array" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </delete>
+
+
+    <!--    编辑地址-->
+    <update id="updateUserAddress" parameterType="useraddress">
+        update useraddress set
+                           userphone=#{phone},userid=#{userid},address=#{address},username=#{username}
+        where id = #{id}
+    </update>
+
+
+<!--    根据id查找所有地址-->
+    <select id="findUserAddressesByUserId" parameterType="Integer" resultMap="UserWithAdress" resultType="useraddress">
+        SELECT ua.id, ua.address, ua.userid, ua.userphone, u.username
+        FROM useraddress ua
+                 JOIN users u ON ua.userid = u.id
+        WHERE u.id = #{id};
+    </select>
+
+    <resultMap id="UserWithAdress" type="useraddress">
+        <id property="id" column="id"></id>
+        <result property="address" column="address"></result>
+        <result property="userid" column="userid"></result>
+        <result property="phone" column="userphone"></result>
+        <result property="username" column="username"></result>
+<!--        <collection property="addresslist" ofType="useraddress">-->
+<!--            <id property="id" column="id"></id>-->
+<!--            <result property="address" column="address"></result>-->
+<!--        </collection>-->
+    </resultMap>
+
+
+</mapper>
+

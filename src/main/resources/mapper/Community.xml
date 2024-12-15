@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.CommunityMapper">
+    <select id="findAllCommunities" resultType="com.cupk.pojo.Community">
+        SELECT *
+        FROM product
+        where state !='审核中' and remark!='下架'
+
+    </select>
+    <select id="findCommunityById" resultType="Community">
+        SELECT *
+        FROM product
+        WHERE id = #{id} and state !='审核中' and remark!='下架'
+        limit 1
+    </select>
+    <select id="findCommunityByType" resultType="com.cupk.pojo.Community">
+        SELECT *
+        FROM product
+        WHERE type = #{type} and state !='审核中' and remark!='下架'
+    </select>
+
+</mapper>

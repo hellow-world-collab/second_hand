@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e53935;
+        }
+        #role{
+            height: 24px;
+            font-family: 'Arial', sans-serif;
+            /*font-size: 24px;*/
+            width:150px;
+        }
+    </style>
+</head>
+<body>
+<h1 align="center">添加用户</h1><br><br>
+<code class="html"><button onclick="goBack()">返回</button></code>
+
+<form th:action="@{/addUserByAdmin}" method="post" enctype="multipart/form-data">
+<table border="1" align="center">
+    <tr>
+        <td>用户名</td>
+        <td><input type="text" name="username"></td>
+    </tr>
+    <tr>
+        <td>密码</td>
+        <td><input type="text" name="password"></td>
+    </tr>
+    <tr>
+        <td>电话</td>
+        <td><input type="text" name="phone"></td>
+    </tr>
+    <tr>
+        <td>邮箱</td>
+        <td><input type="text" name="email"></td>
+    </tr>
+    <tr>
+        <td>头像</td>
+        <td><input type="file" name="imges"></td>
+    </tr>
+        <td>权限级别</td>
+        <td>
+            <select name="role" id="role">
+                <option value="users" selected>用户</option>
+                <option value="admin">管理员</option>
+            </select>
+        </td>
+    <tr>
+        <td colspan="2" align="center"><input type="submit" value="添加"></td>
+    </tr>
+</table>
+</form>
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>
+</body>
+</html>

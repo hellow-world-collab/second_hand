@@ -1,0 +1,40 @@
+server:
+    port: 8080
+spring:
+    application:
+        name: ems-thymeleaf
+    datasource:
+        username: root
+        password: 123456
+        url: jdbc:mysql://localhost:3306/testing?useSSL=false&userUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    thymeleaf:
+        cache: false
+        encoding: utf-8
+        mode: HTML5
+        suffix: .html
+        prefix: classpath:/templates/
+    servlet:
+        multipart:
+            max-file-size: 10MB
+            max-request-size: 100MB
+
+
+mybatis:
+    type-aliases-package: com.cupk.pojo
+    mapper-locations: classpath*:/mapper/*.xml  #加载此路径下的映射文件
+    configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #日志配置，很好的监视程序运行效果
+
+pagehelper:
+    helper-dialect: mysql
+    reasonable: true
+    support-methods-arguments: true
+    params: count=countsql
+alipay:
+    alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmO13xLBAcdX7Oh9nij45fBlY1zzpIE0QfDcZna10Taon7x1hNrdR096mhikwUzkWivovMxw0kZIRipyw4cZXHDvKwR0u5wdEiPzjvCJNqc72MC8LkAPx97JNdxfQKGEGFDmqWSie9ADGjQLZWr3nMZ+v0DLk8Y4P54lXNhS6l1z/eKR/5uFtssluB1PU4Gc/h2+xVVCK00l076j3DhWu+nf9bOw8E3ULsyj3ugUpE4Tr9UPGdHmPxmSJa97bgU/OAvcx11zBTbjaHSM9jyG0bWBYjl3Q8GEaBV5q+3fJBBeI6r7D4bk7gb73nIT3bNI2b5Tx8DP7l38xgQi7eZCdnQIDAQAB
+    appId: 9021000138678473
+    appPrivateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCh4FT/IZmRPVXCvM2hEyAFbLjoS6DC62vW8ZFYVc1S73QMNuCODXlcXO4eFCqJseS1I9p2tt7vL+4TyYidCKTbP/4NeUrlrn1GNIWGi6gYZYcZocZsYacJUnL++0XS0laaX3gLEJYcsOPQboKxiB+YF5EVYIJkUaYAJLnxe5YpPjmxNh4pWOUdRgRU1MqlpiwNj+zPCxVa6k1tYAIKzfteTCUp9AlthYaM9OlhcM8y8OQ1/9pCdUMRDodBZy6VBXysIa2GU98Q5VvxftsKw5Q5gwrl30ojtwIDSwEAuhUpBBy9ZsL/mtFX5BLWLKwAZomY3T7kCAeFspNoEX4K+VMnAgMBAAECggEAI+vTELaVDFzO/iLFgrvqvClvMuUtbHOvf4gll7Oal4/Zcahv1jX5O1zH3lbdRab7OJMXNIbKG8vICg4LycUUSC8AIl9LFoLM+9pF0yCEkb1d6Hs0u/JDjdcE+74otWrFmwYabmIk3YMHWsZbLCgn0qlQIa1D4h0YOCnuNT8WiFoRIGDg/u8gwcYAA5D4bCHmxqC5MvzolX0Pm1zzFkoWHB/JeBMDe6eO+PBom/h37E3maDBjtkT4snzdrQGPiGYykdlc1Mct0t/5GABlJAr5vMRT58ZcSzU06HfsIiRDrgGuVbyma6HOT4p5eijZ/rsiVmApPPfBqPNtqhc9wGOM0QKBgQD8kZL1nrZiGirJ/r7JxJ9YhBx2VmrtI4jd4+TjQ/2WSDKCzpQZjDDrgqZdrWgrdoX1YxxT8DGd9PuKjftRb0NUxJBsNPJ4TAsL9Eskto1XPiLYNQOhMtjuYttsFNFswhxhOdzXAMxRJew66nTwXUkLcegQYH7dMKJQPcvUwXx/KQKBgQCkE1UwLzzuMseMDpC7RmoAyOsl/tirkA2SzlD9BwtSlPdwVOxvI05B7N4xo8jrMMJELdRMxACqjvn4bPPWWnvrqpeHBe8YQj4IqYtI1K0h7kKqfq9VnbPGUfb9o/VezJdZ7uZIKNarZ4Uo5p/p1a+vKt/ai52b5OnXg4nXIbeZzwKBgDFAghP7uz0uNSHm13WpLhmoyZQaDgfoYgxDIKNg4tanhZIUjrTcrb1/YMnrwuCW4FCV3zRPJp3S5CqEvXmH5O1m13MCcDYdPho6rVyfbLiSmWDoFakdrUfvZzKQbLZ0s+wRyIr00OMSLhrfFaa5ykC9Ga/34UVo8n4LTvBSOuDhAoGAbypWFn565txqzN71ep07pup6P9UKEjtYpvW4c6b5KeuaNnajdq1SEWKeLL3OnGL9zFnMtHI8DVMv0/xlvP6zZTnAzo/brfD7vLy6jQ7jetDGRGPvAbAGpMDV+oXC8oblqN4vEgbxY1KRKuQOxsyr6p++6YCcuYoAUa9ijerfTYsCgYEAjAidiPT8PcomXycEw0p/7oUoBcQk4MzebDmXdX2gl9siDciEHO/bejacRx0whFd8CVwyEMPw52UdkFYlq8wq+C61I6ymRear8TXB0WQiP9ZCplj6USLK9NRLlf8YmWw3Qui/ldSAEQI/bPThilEX4AhLQ288UYWWtbvb1WvPL6A=
+    notifyUrl: http://123.57.192.154/alipay/notify
+    returnUrl: http://localhost:8080/index
+

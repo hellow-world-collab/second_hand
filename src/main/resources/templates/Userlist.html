@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息列表</title>
+    <script src="../static/js/jquery-3.7.1.js"></script>
+</head>
+<link rel="stylesheet" type="text/css" th:href="@{css/Userlist.css}">
+
+<body>
+<h1>用户信息列表</h1><br><br>
+<!--<div>-->
+<!--    <form action="/searchBooks" method="post">-->
+<!--        图书名称:<input type="text" name="name">-->
+<!--        图书种类:<input type="text" name="category">-->
+<!--        图书作者:<input type="text" name="author">-->
+<!--        <input type="submit" value="搜索">-->
+<!--    </form>-->
+<!--</div>-->
+<br><br>
+<div id="search">
+    <form id="searchForm" action="/searchUsersByStr" method="post">
+        搜索：<input type="text" name="searchStr" id="searchStr">
+        <input type="submit" value="搜索">
+    </form>
+</div>
+<!--跳转到别的html-->
+<a th:href="@{/addUserByAdmin}" id="add">添加</a>
+<input type="button" value="批量删除" onclick="dels()" id="dels"><br><br>
+<table id="table">
+    <tr>
+        <td>选择</td>
+        <td>编号</td>
+        <td>用户名称</td>
+        <td>密码</td>
+        <td>电话</td>
+        <td>邮箱</td>
+        <td>头像路径</td>
+        <td>头像图片</td>
+        <td>操作</td>
+    </tr>
+    <tr th:each="user:${page.list}">
+        <td><input type="checkbox" class="ids" th:value="${user.id}"></td>
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.phone}"></td>
+        <td th:text="${user.email}"></td>
+        <td id="imageurl" th:text="${user.imgurl}"></td>
+        <td><img id="img" th:src="${user.imgurl}" alt="erro"></td>
+        <td>
+            <a id="lista1" th:href="@{'/toupdateUser/'+${user.id}}">编辑</a>
+            <a id="lista2" th:href="@{'/deleteUser/'+${user.id}}">删除</a>
+            <a  id="lista3" th:href="@{'/upgrade/'+${user.id}}">升级权限</a>
+        </td>
+    </tr>
+</table>
+<div id="fenye">
+    <a id="fenye1" th:if="${not page.isFirstPage}" th:href="@{/users(start=${page.pageNum -1})}">上一页</a>
+    &nbsp;&nbsp; 总页数 : <span th:text="${page.pages}"></span>&nbsp;
+    &nbsp;&nbsp; 当前页 : <span th:text="${page.pageNum}"></span>&nbsp;
+    &nbsp;&nbsp; 总记录数 : <span th:text="${page.total}"></span>&nbsp;
+    &nbsp;&nbsp; 当前页总记录数 : <span th:text="${page.size}"></span>&nbsp;
+    &nbsp;&nbsp;<a id="fenye2" th:if="${not page.isLastPage}" th:href="@{/users(start=${page.pageNum+1})}">下一页</a>
+
+</div>
+<script src="js/jquery-3.7.1.js"></script>
+<script>
+    function dels(){
+        if(confirm("确定删除所选用户吗?")){
+            var ids="";
+            $(".ids").each(
+                function (i,e){
+                    if($(e).is(":checked")){
+                        var id=$(e).val();
+                        ids+=id+",";
+                    }
+                }
+            );
+            if(ids.length==0){
+                alert("未选择任何用户,请选择删除项");
+            }else{
+                ids=ids.substr(0,ids.length-1);
+                // alert(ids);
+                location.href="deleteUsers?id="+ids;//构造出类似deleteBooks?id=1,2,3后台可以用数组接收
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>社区广场</title>
+    <link rel="stylesheet" th:href="@{/css/community.css}">
+</head>
+<body>
+<div id="container" style="height:60px">
+    <div id="top_div">
+
+        <!--          头部左盒子  //主标志往左边靠-->
+        <div id="left_div">
+            <div id="main_mark">
+                主标志
+            </div>
+        </div>
+        <!--          头部左盒子  //主标志往左边靠-->
+
+
+
+        <!--导航栏部分-->
+        <div id="nav_div">
+
+            <ul id="nav_ul">
+                <li>热卖专区</li>
+                <li>社区广场</li>
+                <li>求购专区</li>
+                <li>二手圈</li>
+                <li>留言反馈</li>
+            </ul>
+        </div>
+        <!--导航栏部分-->
+
+        <!--      头部右盒子      //信息和个人中心往右边靠-->
+        <div id="right_div">
+
+            <!--                聊天信息-->
+            <div id="chat_div">
+                    <span>
+                        <img th:src="@{/icon/通信消息.png}" alt="">
+                    </span>
+                聊天信息
+
+            </div>
+            <!--                聊天信息-->
+
+            <!--                个人中心-->
+            <div id="personal_center_div">
+                    <span>
+<!--                        <img id="touxiang" th:src="${session.loginUser.imgurl}">-->
+                        <img th:src="@{/icon/用户.png}" alt="">
+                        <ul id="dropdown_nav">
+                                <div id="conule"></div>
+                                <li class="li">个人中心</li>
+                                <li class="li">我的订单</li>
+                                <li class="li">我的商品</li>
+                                <li class="li">我的帖子</li>
+                                <li class="li">我的求购</li>
+                                <li class="li">我的地址</li>
+                                <li class="li">退出登录</li>
+                        </ul>
+
+                    </span>
+                <span>用户名称</span>
+                <img th:src="@{/icon/angle-down.png}" alt="">
+
+            </div>
+            <!--                个人中心-->
+
+
+        </div>
+
+
+        <!--      头部右盒子      //信息和个人中心往右边靠-->
+    </div>
+    <div id="menu" style="background-color:deepskyblue;height:100px;">
+        <nav>
+            <a th:href="@{/communitiesPage}">全部</a>
+            <a th:href="@{/communitiesPage(type='生活用品')}">生活用品</a>
+            <a th:href="@{/communitiesPage(type='图书')}">图书</a>
+            <a th:href="@{/communitiesPage(type='食物')}">食物</a>
+            <a th:href="@{/communitiesPage(type='数码产品')}">数码产品</a>
+        </nav>
+    </div>
+    <div class="big">
+        <div th:each="community : ${page.list}" class="1" style="height:100px;background-color: aquamarine;display: flex;justify-content: center;align-items: center">
+            <table border="1px">
+                <tr>
+                    <td colspan="3" class="title">
+                        <a th:href="@{'/community/' + ${community.id}}">[[${community.title}]]</a>
+                    </td>
+                    <td rowspan="3" th:text="${community.imgurl}">放图片</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="description" th:text="${community.introduce}">二手图书</td>
+                </tr>
+                <tr>
+                    <td class="name" th:text="${community.username} ?: '默认名称'">张三</td>
+                    <td class="time" th:text="${#dates.format(community.time, 'yyyy-MM-dd')}"></td>
+                    <td class="read_number">25</td>
+                </tr>
+            </table>
+        </div>
+        <div class="right"></div>
+    </div>
+    <div style="background-color: blanchedalmond">
+        <a th:if="${not page.isFirstPage}" th:href="@{/communitiesPage?pageNum=${page.pageNum-1}&type=${selectedType}}">上一页</a>
+        &nbsp;&nbsp;总页数：<span th:text="${page.pages}"></span>&nbsp;
+        &nbsp;&nbsp;当前页数：<span th:text="${page.pageNum}"></span>&nbsp;
+        &nbsp;&nbsp;总动态数：<span th:text="${page.total}"></span>&nbsp;
+        &nbsp;&nbsp;当前页动态数：<span th:text="${page.size}"></span>&nbsp;
+        <a th:if="${not page.isLastPage}" th:href="@{/communitiesPage?pageNum=${page.pageNum+1}&type=${selectedType}}">下一页</a>
+    </div>
+</div>
+<div class="foot" style="background-color: darkgray;"></div>
+</body>
+</html>

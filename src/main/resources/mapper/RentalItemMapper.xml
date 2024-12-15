@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.RentalItemMapper">
+<!--    查找全部物品-->
+    <select id="findAllRentalItems" resultType="rental_item" resultMap="AllRentalItems">
+        SELECT r.id,r.name,r.price_one_day,r.deposit,r.introduce,r.address,r.imgurl,r.time,r.state,r.type,r.user_id,u.username,r.remark
+        FROM rental_item r
+                 JOIN users u ON r.user_id = u.id
+    </select>
+
+    <resultMap id="AllRentalItems" type="rental_item">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="price_one_day" column="price_one_day"></result>
+        <result property="deposit" column="deposit"></result>
+        <result property="introduce" column="introduce"></result>
+        <result property="address" column="address"></result>
+        <result property="imgurl" column="imgurl"></result>
+        <result property="time" column="time"></result>
+        <result property="state" column="state"></result>
+        <result property="type" column="type"></result>
+        <result property="user_id" column="user_id"></result>
+        <result property="user_name" column="username"></result>
+        <result property="remark" column="remark"></result>
+    </resultMap>
+
+<!--    根据id删除二手物品-->
+    <delete id="deleteRentalItem" parameterType="int">
+        delete from rental_item where id=#{id}
+    </delete>
+
+    <!--全局模糊搜索-->
+    <select id="searchRentalItemsByStr" parameterType="java.lang.String" resultType="rental_item">
+        select * from rental_item
+        where 1=1
+        <if test="searchStr!=null and searchStr!=''">
+            AND name like concat('%',#{searchStr},'%')
+            OR price_one_day like concat('%',#{searchStr},'%')
+            OR id like concat('%',#{searchStr},'%')
+            OR imgurl like concat('%',#{searchStr},'%')
+            OR type like concat('%',#{searchStr},'%')
+            OR time like concat('%',#{searchStr},'%')
+            OR title like concat('%',#{searchStr},'%')
+            OR introduce like concat('%',#{searchStr},'%')
+            OR user_id like concat('%',#{searchStr},'%')
+            OR deposit like concat('%',#{searchStr},'%')
+        </if>
+    </select>
+
+    <!--批量删除二手物品-->
+    <delete id="deleteRentalItems">
+        delete from rental_item where id in
+            <foreach collection="array" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </delete>
+
+<!--    根据ID查找二手物品-->
+    <select id="findRentalItemById" resultType="rental_item">
+        select *
+        from rental_item
+        where id=#{id}
+    </select>
+
+<!--    编辑二手物品-->
+    <update id="updateRentalItem" parameterType="rental_item">
+        update rental_item set
+                          name=#{name},price_one_day=#{price_one_day},id=#{id},imgurl=#{imgurl},type=#{type},time=#{time},user_id=#{user_id},title=#{title},introduce=#{introduce},deposit=#{deposit}
+        where id = #{id}
+    </update>
+
+
+    <update id="updateProductimgnull" parameterType="rental_item">
+        update rental_item set
+                            name=#{name},price_one_day=#{price_one_day},id=#{id},type=#{type},time=#{time},user_id=#{user_id},title=#{title},introduce=#{introduce},deposit=#{deposit}
+        where id = #{id}
+    </update>
+
+    <!-- 根据种类查询租赁商品 -->
+    <select id="findRentalItemsByType" resultType="rental_item">
+        SELECT * FROM rental_item
+        WHERE 1=1
+        <if test="category != null and category != ''">
+            AND type = #{category}
+        </if>
+    </select>
+
+<!--    用户查看商品-->
+    <select id="rentalitembyuser" resultType="rental_item">
+        select r.*,u.username
+        from rental_item r join users u on u.id=r.user_id
+        where r.id=#{id}
+    </select>
+
+    <update id="updateRentalItemmark">
+        update rental_item set remark="下架" where id=#{id}
+    </update>
+</mapper>
+

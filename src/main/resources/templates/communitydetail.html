@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>动态详情</title>
+    <link rel="stylesheet" th:href="@{/css/communitydetail.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<code class="html"><button onclick="goBack()">返回</button></code>
+<div id="container">
+    <div id="header" class="header">
+        <h1>社区详情</h1>
+    </div>
+
+    <div class="big">
+        <div class="community-detail">
+            <div class="info">
+                <div class="title" th:text="${community.title}">标题</div>
+                <div class="name" th:text="${community.id} ?: '默认号码'">用户号码</div>
+                <div class="time" th:text="${#dates.format(community.time,'yyyy-MM-dd')}"></div>
+                <div class="description" th:text="${community.introduce}">描述</div>
+                <div class="link" >连接商品页</div>
+            </div>
+            <div class="image" th:style="'background-image: url(' + ${community.imgurl} + ');'"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>
+</body>
+</html>

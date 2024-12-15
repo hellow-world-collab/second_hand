@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>求购专区</title>
+    <link rel="stylesheet" th:href="@{/css/wantobut.css}">
+</head>
+<body>
+<div id="container">
+<div id="back">返回</div>
+
+    <div class="big">
+        <div th:each="wantBuy : ${wantBuys}" class="community-item">
+            <div class="info">
+                <div class="title">
+                    <a th:href="@{'/community/' + ${wantBuy.id}}">[[${wantBuy.title}]]</a>
+                </div>
+                <div class="basic-info">
+                    <div class="name" th:text="${wantBuy.id} ?: '编号'">用户名</div>
+
+                </div>
+                <div class="description" th:text="${wantBuy.content}">描述</div>
+            </div>
+<!--            <div class="image">-->
+<!--                <img th:src="@{${community.imgurl}}" alt="WantBuy Image"/>-->
+<!--            </div>-->
+        </div>
+    </div>
+    <div class="foot"></div>
+</div>
+</body>
+<script th:src="@{/js/jquery-3.7.1.js}"></script>
+<script>
+    $("#back").click(function (){
+        window.history.back();
+    })
+</script>
+</html>

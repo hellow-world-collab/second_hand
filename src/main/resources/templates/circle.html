@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>二手交易圈</title>
+    <link rel="stylesheet" th:href="@{/css/circle.css}">
+    <style>
+        #tobuy{
+            position: absolute;
+            width: 100px;
+            height: 50px;
+            background-color: #c8c8c2;
+            top: 5px;
+            left: 10px;
+            font-size: 20px;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+            border-radius: 10px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+
+        }
+
+        #tobuy:hover{
+            background-color: #62a39f;
+        }
+        #tobuy a{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- 引入 SweetAlert2 库 -->
+</head>
+<body>
+<div id="container">
+    <div id="top_div">
+        <div id="tobuy"><a th:href="@{/index}">返回</a></div>
+
+
+<!--        <code class="html"><button onclick="goBack()">返回</button></code>-->
+<!--        <script>-->
+<!--            function goBack(){-->
+<!--                window.history.back();-->
+<!--            }-->
+<!--        </script>-->
+    </div>
+
+    <div class="big">
+        <div th:each="circle : ${circles}" class="community-item" th:data-circle-id="${circle.id}">
+            <div class="image">
+                <img th:src="@{${circle.circleImgurl}}" alt="circle image">
+            </div>
+            <div class="info">
+                <div class="title">
+                    <a th:href="@{/circle/{id}(id=${circle.id})}" th:text="${circle.title}">标题</a>
+                </div>
+                <div class="basic-info">
+                    <span class="name" th:text="${circle.user.username}">发布人</span>
+                </div>
+                <div class="description">
+                    <span th:text="${circle.description}">描述</span>
+                </div>
+            </div>
+            <button class="toggle-comments">展开留言</button>
+            <div class="comments-section">
+                <div class="comments">
+                    <!-- 评论添加 -->
+                </div>
+                <textarea placeholder="写下你的留言..."></textarea>
+                <div class="comment-controls">
+                    <button class="hide-comments">收起留言</button>
+                    <button class="comment-btn">留言</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="foot"></div>
+</div>
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleButtons = document.querySelectorAll('.toggle-comments');
+        const hideButtons = document.querySelectorAll('.hide-comments');
+
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const commentSection = this.nextElementSibling;
+                commentSection.style.display = 'flex';
+                const commentsContainer = commentSection.querySelector('.comments');
+                const circleId = this.closest('.community-item').getAttribute('data-circle-id');
+
+
+                fetch(`/api/circle/${circleId}/comments`)
+                    .then(response => response.json())
+                    .then(comments => {
+                        commentsContainer.innerHTML = '';
+                        comments.forEach(comment => {
+                            const commentDiv = document.createElement('div');
+                            commentDiv.classList.add('comment');
+                            commentDiv.innerHTML = `
+                            <strong>${comment.createdBy}</strong> (${new Date(comment.createdAt).toLocaleString()}):
+                            <p>${comment.content}</p>
+                        `;
+                            commentsContainer.appendChild(commentDiv);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+
+        hideButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const commentSection = this.closest('.comments-section');
+                commentSection.style.display = 'none';
+            });
+        });
+
+        const commentButtons = document.querySelectorAll('.comment-btn');
+        commentButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const textarea = this.closest('.comments-section').querySelector('textarea');
+                const commentsContainer = this.closest('.comments-section').querySelector('.comments');
+                const circleId = this.closest('.community-item').getAttribute('data-circle-id');
+                const content = textarea.value;
+                if (!content.trim()) {
+                    alert('Please enter a comment.');
+                    return;
+                }
+                fetch(`/api/circle/${circleId}/comment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ content: content })
+                })
+                    .then(response => response.json())
+                    .then(comment => {
+                        console.log('Comment added:', comment);
+                        // 添加新评论到评论列表底部
+                        const commentDiv = document.createElement('div');
+                        commentDiv.classList.add('comment');
+                        commentDiv.innerHTML = `
+                    <strong>${comment.createdBy}</strong> (${new Date(comment.createdAt).toLocaleString()}):
+                    <p>${comment.content}</p>
+                `;
+                        commentsContainer.appendChild(commentDiv);
+                        textarea.value = ''; // 清空输入框
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    });
+</script>
+</body>
+</html>

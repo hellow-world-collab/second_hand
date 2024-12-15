@@ -1,0 +1,68 @@
+$(document).ready(function() {
+    var chart = echarts.init(document.getElementById("big"));
+    var option = {
+        graphic: {
+            elements: [
+                {
+                    type: 'text',
+                    left: 'center',
+                    top: 'center',
+                    style: {
+                        text: '二手交易圈',
+                        fontSize: 120,
+                        fontWeight: 'bold',
+                        lineDash: [0, 100],
+                        lineDashOffset: 0,
+                        fill: 'transparent',
+                        stroke: '#000',
+                        lineWidth: 1
+                    },
+                    keyframeAnimation: {
+                        duration: 1500,
+                        loop: false, // 设置动画播放完毕后不重复
+                        keyframes: [
+                            {
+                                percent: 0.8,
+                                style: {
+                                    fill: 'transparent',
+                                    lineDashOffset: 200,
+                                    lineDash: [300, 0]
+                                }
+                            },
+                            {
+                                // 停顿一会儿
+                                percent: 0.8,
+                                style: {
+                                    fill: 'transparent'
+                                }
+                            },
+                            {
+                                percent: 1,
+                                style: {
+                                    fill: 'black'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    };
+    chart.setOption(option);
+
+    chart.on('finished', function() {
+        $('#title').animate({
+            top: '20%' // 标题上移
+        }, 1000);
+        $('#buttonContainer').css({ opacity: 0 }).show().animate({
+            top: '65%', // 按钮自上而下显现并稍微下移
+            opacity: 1 // 按钮逐渐显现
+        }, 1000, function() {
+            $('#startButton').addClass('blink'); // 添加闪烁效果
+        });
+    });
+
+    $('#startButton').on('click', function() {
+        window.location.href = 'http://localhost:8080/circle'; // 跳转到指定URL
+    });
+});

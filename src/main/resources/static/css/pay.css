@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table, th, td {
+    border: 1px solid #ddd;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+th {
+    background-color: #f2f2f2;
+}
+img {
+    max-width: 100px;
+    height: auto;
+}
+.actions {
+    margin-top: 20px;
+    text-align: center;
+}
+.actions a, .actions button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+.actions a {
+    background-color: #007bff;
+    color: #fff;
+}
+.actions button {
+    background-color: #6c757d;
+    color: #fff;
+}
+.actions a:hover, .actions button:hover {
+    opacity: 0.8;
+}
+.actions #pay {
+    background-color: #28a745;
+    color: #fff;
+}
+.actions #pay[disabled] {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}

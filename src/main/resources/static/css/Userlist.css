@@ -1,0 +1,157 @@
+/*!**{*!*/
+/*!*    margin:0px;*!*/
+/*!*    padding:0px;*!*/
+/*!*    border:0px;*!*/
+/*!*}*!*/
+/*h1{*/
+/*    text-align: center;*/
+/*}*/
+
+/*#add{*/
+/*    display: inline-block;*/
+/*    width: 50px;*/
+/*    height:25px;*/
+/*    text-align:center;*/
+/*    text-decoration: none;*/
+/*    background: aqua;*/
+/*    position:absolute;*/
+/*    top:15%;*/
+/*    left:10%;*/
+/*    border-radius:10px;*/
+/*}*/
+/*#dels{*/
+/*    position:absolute;*/
+/*    top:15%;*/
+/*    left:15%;*/
+/*}*/
+/*#search{*/
+/*    position:absolute;*/
+/*    top:10%;*/
+/*    left:10%;*/
+/*}*/
+/*#fenye{*/
+/*    position:absolute;*/
+/*    bottom:15%;*/
+/*    left:35%;*/
+/*}*/
+/*#fenye1{*/
+/*    display: inline-block;*/
+/*    text-align:center;*/
+/*    width:75px;*/
+/*    height:25px;*/
+/*    text-decoration: none;*/
+/*    background-color: aqua;*/
+/*    !*background-size: 100px 100px;*!*/
+/*    border-radius:10px;*/
+
+/*}*/
+/*#fenye2{*/
+/*    display: inline-block;*/
+/*    width:75px;*/
+/*    height:25px;*/
+/*    text-decoration: none;*/
+/*    text-align: center;*/
+/*    background: aqua;*/
+/*    border-radius:10px;*/
+
+/*}*/
+/*#lista1,#lista2{*/
+/*    display: inline-block;*/
+/*    width:75px;*/
+/*    height:25px;*/
+/*    text-align:center;*/
+/*    text-decoration: none;*/
+/*    background-color: aqua;*/
+/*    border-radius:10px;*/
+/*    margin-left: 10px;*/
+/*}*/
+/*#lista3{*/
+/*    display: inline-block;*/
+/*    width:140px;*/
+/*    height:25px;*/
+/*    text-align:center;*/
+/*    text-decoration: none;*/
+/*    background-color: aqua;*/
+/*    border-radius:10px;*/
+/*    margin-left: 10px;*/
+/*}*/
+/*#table{*/
+/*    margin:auto;*/
+/*    border: 1px solid black;*/
+/*    border-collapse: collapse;*/
+/*    text-align: center;*/
+/*}*/
+/*td{*/
+/*    border: 1px solid black;*/
+/*}*/
+#img{
+    width:80px;
+    height:80px;
+}
+/* 全局样式 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* 表格样式 */
+#table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+#table, #table th, #table td {
+    border: 1px solid #ddd;
+}
+
+#table th, #table td {
+    padding: 15px;
+    text-align: left;
+}
+
+#table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#imageurl{
+    width: 110px;
+}
+/* 按钮和链接样式 */
+button, input[type="submit"], a {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5cb85c;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover, input[type="submit"]:hover, a:hover {
+    background-color: #4cae4c;
+}
+
+/* 分页链接样式 */
+#fenye a {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+#fenye a:hover {
+    background-color: #ddd;
+}
+
+/* 当前页码样式 */
+#fenye .current {
+    background-color: #4CAF50;
+    color: white;
+}

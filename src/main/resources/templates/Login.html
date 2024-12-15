@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录界面</title>
+</head>
+<link rel="stylesheet" type="text/css" th:href="@{css/login.css}">
+
+<body>
+<form action="/loginstation" method="post">
+    <p>
+        <label for="username">账户名</label>
+        <input type="text" name="username" id="username"  />
+        <!--	  pattern="^[a-zA-Z][a-zA-Z0-9_]{4,15}$"-->
+    </p>
+    <p>
+        <label for="password">密码：</label>
+        <input type="password" name="password" id="password" />
+        <!--	  pattern="^[a-zA-Z]\w{5,17}$"-->
+    </p>
+    <p>
+        <select name="role" id="role">
+            <option value="users" selected>用户</option>
+            <option value="admin">管理员</option>
+        </select>
+    </p>
+    <p>
+        <input type="submit" id="btn01" value="登录"/><br><br>
+        <a id="zhuce" th:href="@{/upload}">无账号去注册</a>
+<!--        注册-->
+    </p>
+</form>
+</body>
+</html>

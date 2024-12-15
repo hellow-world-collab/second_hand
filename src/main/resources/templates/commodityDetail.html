@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品购买详情</title>
+    <link rel="stylesheet" th:href="@{/css/commodityDetail.css}">
+</head>
+<body>
+    <header>
+<!--        头部top盒子-->
+        <div id="top_div">
+
+<!--          头部左盒子  //主标志往左边靠-->
+            <div id="left_div">
+                <div id="main_mark">
+                    主标志
+                </div>
+            </div>
+ <!--          头部左盒子  //主标志往左边靠-->
+
+
+
+<!--导航栏部分-->
+            <div id="nav_div">
+
+                <ul id="nav_ul">
+                    <li>热卖专区</li>
+                    <li>社区广场</li>
+                    <li>求购专区</li>
+                    <li>二手交易圈</li>
+<!--                    <li>系统公告</li>-->
+                </ul>
+            </div>
+<!--导航栏部分-->
+
+<!--      头部右盒子      //信息和个人中心往右边靠-->
+            <div id="right_div">
+
+<!--                聊天信息-->
+<!--                <div id="chat_div">-->
+<!--                    <span>-->
+<!--                        <img th:src="@{/icon/通信消息.png}" alt="">-->
+<!--                    </span>-->
+<!--                    聊天信息-->
+
+<!--                </div>-->
+<!--                聊天信息-->
+
+<!--                个人中心-->
+                <div id="personal_center_div">
+                    <span>
+<!--                        <img id="touxiang" th:src="${session.loginUser.imgurl}">-->
+                        <img th:src="@{/icon/用户.png}" alt="">
+                        <ul id="dropdown_nav">
+                                <div id="conule"></div>
+                                <li class="li">个人中心</li>
+                                <li class="li">我的订单</li>
+                                <li class="li">我的商品</li>
+                                <li class="li">我的帖子</li>
+                                <li class="li">我的求购</li>
+                                <li class="li">我的地址</li>
+
+                                <li class="li">退出登录</li>
+                        </ul>
+
+                    </span>
+                    <span>用户名称操</span>
+                    <img th:src="@{/icon/angle-down.png}" alt="">
+
+                </div>
+<!--                个人中心-->
+
+
+            </div>
+
+
+<!--      头部右盒子      //信息和个人中心往右边靠-->
+        </div>
+
+
+
+ <!--        商品购买部分-->
+        <div id="commodity_div">
+            <div id="commodity_buy_div">
+<!--                <div id="img_div"><img th:src="${commodityDetail.commodity_imgurl}" alt=""></div>-->
+                <input type="hidden" th:value="${commodityDetail.commodity_id}" id="commodity_id">
+                <div id="img_div"><img th:src="@{commodityDetail.commodity_imgurl}" alt=""></div>
+                <div id="introduce_div" th:text="${commodityDetail.commodity_introduce}"></div>
+                <div id="price_div" th:text="'价格：￥'+${commodityDetail.commodity_price}"></div>
+                <div id="msg_div">
+                    <p th:text="'发货地：'+${commodityDetail.commodity_send_address}"></p>
+                    <p th:text="'卖家：'+${commodityDetail.commodity_saler}"></p>
+                    <p>上架日期：</p>
+                    <p th:text="${#dates.format(commodityDetail.commodity_pub_time)}"></p>
+                </div>
+                <div id="buy_div">
+                        <span id="buy">立即购买</span>
+                </div>
+            </div>
+        </div>
+<!--        商品购买部分-->
+    </header>
+
+    <section>
+        <div id="s_left_div"></div>
+
+
+<!---=-=-=-=-=-=-=-=-=-=-=-=评论区-=-=-=-=-=-==-=-=-=评论区域=-=-=-=-=-=-=-=-=-评论区域=--=-=-=-=-=--->
+        <div id="s_center_div">
+            <div id="dis_top">
+                <div id="dis_title">
+                    <div>商品评论</div>
+                </div>
+            </div>
+            <div id="dis_body">
+                <div id="pub_dis">
+                    <div id="pub_text">
+                        <textarea id="textarea" autocomplete="off"  placeholder="请输入评论"></textarea>
+                        <div id="pub_button">评论</div>
+                    </div>
+                </div>
+                <div id="dis_div">
+                    <input type="hidden" th:value="${this_user_id}" id="this_user_id">
+                    <input type="hidden" th:value="${discussnum}" id="discussnum"/>
+                    <input type="hidden" th:value="${replynum}" id="replynum"/>
+                    <div th:each="reply:${replylist}">
+                        <input type="hidden" th:value="${reply.dis_id}" th:id="'dis_id_rep'+${reply.index}">
+                        <input type="hidden" th:value="${reply.user_id}" th:id="'uuuu'+${reply.index}">
+<!--                        <input type="hidden" th:value="${reply.discuss_text}" th:id="">-->
+                        <input type="hidden" th:value="${reply.the_userid_reply}" th:id="'nameid'+${reply.index}">
+                        <input type="hidden" th:value="${reply.the_user_name}" th:id="'name'+${reply.index}">
+
+                        <input type="hidden" th:value="${reply.reply_user_id}" th:id="'tonameid'+${reply.index}">
+
+<!--                        <input type="hidden" th:value="${reply.the_userid_reply}+' 回复 '+${reply.reply_user_id}" th:id="'nameTname'+${reply.reply_id}">-->
+                        <input type="hidden" th:value="${reply.the_user_name}+' 回复 '+${reply.reply_user_name}" th:id="'nameTname'+${reply.index}">
+                        <input type="hidden" th:value="${reply.reply_text}" th:id="'reply_text'+${reply.index}">
+                    </div>
+
+                    <div th:each="dis:${discusslist}">
+                        <input type="hidden" th:value="${dis.dis_id}" th:id="'dis_id'+${dis.index}"/>
+                        <input type="hidden" th:value="${dis.user_id}" th:id="'disnameid'+${dis.index}"/>
+                        <input type="hidden" th:value="${dis.user_name}" th:id="'disname'+${dis.index}"/>
+                        <input type="hidden" th:value="${dis.discuss_text}" th:id="'text'+${dis.index}"/>
+                    </div>
+<!--                    评论者添加加reviewer_and_reply-->
+<!--                    <div class="reviewer_and_reply">-->
+<!--                        <div class="rev">-->
+<!--                            <div class="rev_head_img"><img th:src="@{/images/素材-39.png}" alt=""></div>-->
+<!--                            <div class="rev_username">用户名aaaa</div>-->
+<!--                            <div class="rev_content">评论内容</div>-->
+<!--                            <div class=rev_time>时间</div>-->
+<!--                            <div class="disbutton">评论</div>-->
+<!--&lt;!&ndash;                            <div class="place1"> <textarea placeholder="请输入评论"></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div id="place1_btn">评论</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                       回复评论者添加 rep&ndash;&gt;-->
+<!--                        <div class="rep">-->
+<!--                            <div class="rep_head_img">头像</div>-->
+<!--                            <div class="rep_username">用户名bbbb回复aaaa</div>-->
+<!--                            <div class="rep_content">回复内容</div>-->
+<!--                            <div class="rep_time">回复时间</div>-->
+<!--                            <div class="repbutton">回复</div>-->
+<!--                            <div class="place2"> <textarea placeholder="请输入评论" class="rep_textarea"></textarea>-->
+<!--                                <div id="place2_btn">评论</div>-->
+<!--                            </div>-->
+
+<!--                        </div>-->
+<!--&lt;!&ndash;                       回复&#45;&#45;&#45;&#45;回复者添加 rep_to_rep&ndash;&gt;-->
+<!--                        <div class="rep_to_rep">-->
+<!--                            <div class="rep2_head_img">头像</div>-->
+<!--                            <div class="rep2_to_rep_username">ccccc回复bbbbb</div>-->
+<!--                            <div class="rep2_to_rep_content">内容</div>-->
+<!--                            <div class="rep2_to_rep_time">时间</div>-->
+<!--                            <div class="rep2_to_repbutton">回复</div>-->
+<!--                            <form action="">-->
+<!--                            <div class="place3"> <textarea placeholder="请输入评论"></textarea>-->
+<!--                                <div id="place3_btn">评论</div>-->
+<!--                            </div></form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div id="s_right_div">
+            <div id="to_top">
+                <img th:src="@{/icon/回到顶部.png}" alt="">
+            </div>
+        </div>
+
+
+    </section>
+
+
+
+
+<!--    <footer>-->
+
+<!--    </footer>-->
+
+
+
+
+
+
+
+
+
+</body>
+
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.js}" charset="UTF-8"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}" charset="UTF-8"></script>
+    <script type="text/javascript" th:src="@{/js/commodityDetail.js}"></script>
+
+<script>
+
+
+</script>
+
+</html>

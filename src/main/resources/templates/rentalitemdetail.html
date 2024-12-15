@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>二手商品详情</title>
+    <link rel="stylesheet" th:href="@{/css/rentalitemdetail.css}">
+</head>
+<body>
+<table border="1" align="center">
+    <tr>
+        <td>编号</td>
+        <td th:text="${pro.id}"></td>
+    </tr>
+    <tr>
+        <td>名称</td>
+        <td th:text="${pro.name}"></td>
+    </tr>
+    <tr>
+        <td>价格</td>
+        <td th:text="${pro.price}"></td>
+    </tr>
+    <tr>
+        <td>图片</td>
+        <td th:text="${pro.imgurl}"></td>
+    </tr>
+    <tr>
+        <td>种类</td>
+        <td th:text="${pro.type}"></td>
+    </tr>
+    <tr>
+        <td>上架时间</td>
+        <td th:text="${#dates.format(pro.time,'YYYY-MM-dd')}"></td>
+    </tr>
+    <tr>
+        <td>卖家ID</td>
+        <td th:text="${book.user_id}"></td>
+    </tr>
+    <tr>
+        <td>标题</td>
+        <td th:text="${book.title}"></td>
+    </tr>
+    <tr>
+        <td>介绍</td>
+        <td th:text="${book.introduce}"></td>
+    </tr>
+</table>
+</body>
+</html>

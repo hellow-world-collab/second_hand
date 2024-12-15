@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>二手交易市场</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: aliceblue;
+        }
+        /*#nav{*/
+        /*    height: 60px;*/
+        /*    width: 100%;*/
+        /*    background-color: aqua;*/
+        /*}*/
+        .del{
+            height: 60px;
+            width: 100%;
+            align-items: center;
+            display: flex;
+        }
+        #tj{
+            height: 38px;
+            width: 100px;
+            margin: 0 0 0 10%;
+            border-radius: 5px;
+            border-color: #8deffc76;
+            text-decoration: none;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+        #tj{
+            color: #4731ef;
+            background-color: #46dbef3d;
+        }
+        #tj:hover{
+            color: #ffffff;
+            background-color: #4731ef;
+        }
+        .liebiao{
+
+            background-color: #ffffff;
+            border-radius: 10px;
+            margin: 0 1%;
+            /* height: 500px; */
+            /* display: flex;
+            align-items: center; */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            /*overflow: hidden;*/
+            font-family: Arial, sans-serif;
+            /*border-spacing: 0px;*/
+            table-layout: fixed;
+            /* margin: 20px; */
+        }
+        .styled-table th,
+        .styled-table td {
+            /*padding: 12px 15px;*/
+            text-align: center;
+            width:100px;
+            height:105px;
+            overflow: hidden;
+            /*text-overflow: ellipsis;*/
+            white-space: nowrap;
+        }
+        .styled-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: #333333;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .styled-table td {
+            background-color: #ffffff;
+            color: #666666;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .styled-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* 增强效果 */
+        .styled-table th:first-child,
+        .styled-table td:first-child {
+            text-align: left;
+        }
+
+        .edit{
+            float:left;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .delete{
+            float:left;
+            background-color: #f44336; /* Red */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .table{
+            width: 90%;
+            margin: 0 auto;
+        }
+        .fenye{
+            width: 90%;
+            margin: 0 auto;
+            padding: 0 30%;
+        }
+        .img1{
+            height: 25px;
+            width: 25px;
+        }
+        .img2{
+            width: 100px;
+            height: 100px;
+        }
+
+    </style>
+<body>
+<div id="nav"></div>
+    <code class="html"><button onclick="goBack()">返回</button></code>
+    <script>
+        function goBack() {
+            window.history.back();
+
+        }
+    </script>
+
+<div class="del"><a id="tj"  th:href="@{/toaddUserPosts}">新增</a></div>
+<div class="liebiao">
+    <div class="table">
+        <table class="styled-table">
+            <tr>
+
+                <td><b>序号</b></td>
+                <td><b>物品名字</b></td>
+                <td><b>价格</b></td>
+                <td><b>图片</b></td>
+                <td><b>圈子</b></td>
+                <td><b>时间</b></td>
+                <td><b>用户ID</b></td>
+                <td><b>标题</b></td>
+                <td><b>简介</b></td>
+                <td><b>类型</b></td>
+                <td><b>功能</b></td>
+            </tr>
+            <tr th:each="post:${page.list}">
+
+                <td th:text="${post.id}"></td>
+                <td th:text="${post.name}"></td>
+                <td th:text="${post.price}"></td>
+                <td >
+                    <img class="img2" th:src="${post.imgurl}" alt="未上传图片">
+                </td>
+                <td th:text="${post.type}"></td>
+                <td th:text="${#dates.format(post.time,'YYYY-MM-dd')}"></td>
+                <td th:text="${post.user_id}"></td>
+                <td th:text="${post.title}"></td>
+                <td th:text="${post.introduce}"></td>
+                <td th:text="${post.state}"></td>
+
+                <td>
+                    <a th:href="@{'/toupdateuserpost/'+${post.id}}" class="edit">编辑</a>
+                    <a th:href="@{'/deletepost/'+${post.id}}" class="delete">删除</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="fenye">
+        <a th:if="${not page.isFirstPage}" th:href="@{/userposts(start=${page.pageNum - 1})}" ><img th:src="@{/img/上一页.png}" class="img1" alt="上一页"></a>
+        总页数:<span th:text="${page.pages}"></span>&nbsp;
+        当前页:<span th:text="${page.pageNum}"></span>&nbsp;
+        总记录数:<span th:text="${page.total}"></span>&nbsp;
+        当前页记录数:<span th:text="${page.size}"></span>&nbsp;
+        <a th:if="${not page.isLastPage}" th:href="@{/userposts(start=${page.pageNum+1})}"><img th:src="@{/img/下一页.png}" class="img1" alt="下一页"></a>
+    </div>
+</div>
+
+</body>
+</html>

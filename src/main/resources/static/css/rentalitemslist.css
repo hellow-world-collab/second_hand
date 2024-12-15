@@ -1,0 +1,275 @@
+*{
+    padding:0px;
+    margin:0px;
+}
+a{
+    text-decoration: none;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    background-color: #F0E5DA;
+    height: 50px;
+}
+
+.shell{
+    top: 50px;
+    position:fixed;
+    width: 200px;
+    height: 100%;                /* 改为100%*/
+    background-color: #8a98c9;
+}
+.buttons{
+    margin: 60px 0;
+    color: #fff;
+}
+.li{
+    letter-spacing: 2px;
+    font: 600 17px '';
+    padding: 16px 52px;
+    transition: .3s;
+}
+.li::after{
+    content: '';
+    position: absolute;
+    left: 20px;
+    margin-top: -22px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+.buttons>li:hover{
+    background-color: #beb5df;
+}
+
+.li ul{
+    width: 0;
+    height: 100%;
+    padding: 60px 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+    background-color: #59699b;
+    transition: .3s;
+}
+
+.li ul li{
+    padding: 16px 24px;
+    transition: .3s;
+}
+
+.li:hover ul{
+    width: 200px;
+}
+.li ul li:hover{
+    background-color: #828eb9;
+}
+
+
+#logo {
+    font-size: 14px;
+    font-weight: bold;
+    float:left;
+    padding-top:1px;
+    padding-right:6px;
+}
+
+#title{
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top:2px;
+    float:left;
+}
+
+#navigation{
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top:10px;
+    padding-left:120px;
+    float:left;
+    font-size: 14px;
+}
+
+#bar{
+    margin-top:10px;
+    margin-left:20px;
+    margin-right:20px;
+    padding:10px;
+    box-shadow:0 0 5px 1px #999;
+    border-radius: 5px;
+}
+
+#searchStr{
+    width: 250px;
+    height: 30px;
+    border: 1px solid #139be1;
+    border-radius: 5px;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    text-indent: 10px;
+}
+
+.search{
+    width: 60px;
+    height: 30px;
+    border: 1px solid #C8C4ED;
+    border-radius: 5px;
+    color: #766BD3;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #F1F0FB;
+}
+
+.reset{
+    width: 60px;
+    height: 30px;
+    border: 1px solid #FFCEBC;
+    border-radius: 5px;
+    color: #FE7843;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #F1F0FB;
+}
+
+#delete{
+    margin-top:10px;
+    margin-left:20px;
+    padding:10px;
+    box-shadow:0 0 5px 1px #999;
+    border-radius: 5px;
+    margin-right:20px;
+}
+
+.deletegoods{
+    float:left;
+    width: 120px;
+    height: 30px;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #FFE8EF;
+}
+
+#goods_list {
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 1620px;
+    box-shadow: 0 0 5px 1px #999;
+    overflow-x: hidden; /* 横向溢出时显示滚动条 */
+    overflow-y: hidden; /* 隐藏垂直滚动条 */
+    height: 800px;
+    border-radius: 5px;
+}
+
+.tablecss {
+    width:1620px; /* 表格宽度100%，填充父容器 */
+    border-collapse: collapse; /* 合并表格边框 */
+    table-layout: fixed;
+}
+
+.tablecss th,
+.tablecss td {
+    width:50px;
+    padding: 9px; /* 单元格内边距 */
+    text-align: center; /* 文字居中对齐 */
+    border: 1px solid #ccc; /* 表格边框 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /* 溢出隐藏 */
+    text-overflow: ellipsis; /* 溢出显示省略号 */
+}
+
+#address{
+    width:30px;
+}
+
+.tablecss th {
+    background-color: #f0f0f0; /* 表头背景色 */
+}
+
+.tablecss td {
+    background-color: #fff; /* 单元格背景色 */
+}
+
+#table_operation {
+    white-space: nowrap; /* 操作栏不换行 */
+}
+
+.button_update,
+.button_delete {
+    display: inline-block; /* 操作按钮内联显示 */
+    padding: 5px 5px; /* 按钮内边距 */
+    /*margin-right: 5px; !* 按钮间距 *!*/
+    text-decoration: none; /* 去除链接下划线 */
+    background-color: #007bff; /* 按钮背景色 */
+    color: #fff; /* 按钮文字颜色 */
+    border-radius: 3px; /* 按钮圆角 */
+}
+
+/* 分页按钮样式 */
+.pagination {
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 3px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .active {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+}
+
+.pagination span.disabled {
+    color: #999;
+    pointer-events: none;
+}
+
+.tablecss img {
+    width: 50px; /* 控制图片大小 */
+    height: 50px;
+    display: block; /* 避免图片下方有空隙 */
+    margin: 0 auto; /* 居中显示 */
+}
+
+.table_bigger {
+    width: 150px; /* 在小屏幕上自适应宽度 */
+    overflow: hidden;
+}
+.tablecss .small{
+    width: 25px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

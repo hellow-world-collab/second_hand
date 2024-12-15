@@ -1,0 +1,72 @@
+/* Reset default margin and padding */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* Center the form horizontally */
+form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Style the table */
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Style the form inputs */
+input[type="text"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px;
+    box-sizing: border-box; /* Ensures padding is included in the width */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Style the submit button */
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    margin-left:350px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Style the textarea */
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+}
+
+/* Center the h1 heading */
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Optional: Adjustments for small screens */
+@media screen and (max-width: 600px) {
+    form {
+        width: 100%;
+    }
+}

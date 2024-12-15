@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>社区广场</title>
+    <link rel="stylesheet" th:href="@{/css/community.css}">
+</head>
+<body>
+<div id="container">
+    <div id="top_div">
+        <button onclick="goBack()" style="height: 40px;width: 60px;margin:auto auto auto 10px;">返回</button>
+        <!--          头部左盒子  //主标志往左边靠-->
+        <div id="left_div">
+            <div id="main_mark">
+                <img th:src="@{/img/logo.png}" alt="旧爱新欢" style="width: 60px;height: 60px">
+            </div>
+        </div>
+        <!--          头部左盒子  //主标志往左边靠-->
+
+
+
+        <!--导航栏部分-->
+<!--        <div id="nav_div">-->
+
+<!--        <div id="back">返回</div>-->
+<!--        </div>-->
+        <!--导航栏部分-->
+
+        <!--      头部右盒子      //信息和个人中心往右边靠-->
+        <div id="right_div">
+
+            <!--                聊天信息-->
+<!--            <div id="chat_div">-->
+<!--                    <span>-->
+<!--                        <img th:src="@{/icon/通信消息.png}" alt="">-->
+<!--                    </span>-->
+<!--                聊天信息-->
+
+<!--            </div>-->
+            <!--                聊天信息-->
+
+            <!--                个人中心-->
+            <div id="personal_center_div">
+                    <span>
+<!--                        <img id="touxiang" th:src="${session.loginUser.imgurl}">-->
+<!--                        <img th:src="@{/icon/用户.png}" alt="">-->
+<!--                        <ul id="dropdown_nav">-->
+<!--                                <div id="conule"></div>-->
+<!--                                <li class="li">个人中心</li>-->
+<!--                                <li class="li">我的订单</li>-->
+<!--                                <li class="li">我的商品</li>-->
+<!--                                <li class="li">我的帖子</li>-->
+<!--                                <li class="li">我的求购</li>-->
+<!--                                <li class="li">我的地址</li>-->
+<!--                                <li class="li">退出登录</li>-->
+<!--                        </ul>-->
+
+<!--                    </span>-->
+<!--                <span>用户名称</span>-->
+<!--                <img th:src="@{/icon/angle-down.png}" alt="">-->
+
+            </div>
+            <!--                个人中心-->
+
+
+        </div>
+
+
+        <!--      头部右盒子      //信息和个人中心往右边靠-->
+    </div>
+    <div id="menu">
+        <nav>
+            <a href="/community" class="nav-button">
+                <img src="../img/主页.png" alt="All"> 全部
+            </a>
+            <a href="/findProductByType?type=生活用品" class="nav-button">
+                <img src="../img/生活.png" alt="Life"> 生活用品
+            </a>
+            <a href="/findProductByType?type=图书" class="nav-button">
+                <img src="../img/图书.png" alt="Books"> 图书
+            </a>
+            <a href="/findProductByType?type=食物" class="nav-button">
+                <img src="../img/食物.png" alt="Food"> 食物
+            </a>
+            <a href="/findProductByType?type=数码产品" class="nav-button">
+                <img src="../img/数码.png" alt="Digital"> 数码产品
+            </a>
+        </nav>
+    </div>
+    <div class="big">
+        <div th:each="community : ${communities}" class="community-item">
+            <div class="info">
+                <div class="title">
+                    <a th:href="@{'/community/' + ${community.id}}">[[${community.title}]]</a>
+                </div>
+                <div class="basic-info">
+                    <div class="name" th:text="${community.id} ?: '编号'">用户名</div>
+                    <div class="time" th:text="${#dates.format(community.time, 'yyyy-MM-dd')}"></div>
+                </div>
+                <div class="description" th:text="${community.introduce}">描述</div>
+            </div>
+            <div class="image">
+                <img th:src="@{${community.imgurl}}" alt="Community Image"/>
+            </div>
+        </div>
+    </div>
+    <div class="foot"></div>
+</div>
+</body>
+<script th:src="@{/js/jquery-3.7.1.js}"></script>
+<script>
+    function goBack(){
+        window.history.back();
+    }
+</script>
+</html>

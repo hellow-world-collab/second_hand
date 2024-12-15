@@ -1,0 +1,262 @@
+*{
+    padding:0px;
+    margin:0px;
+}
+a{
+    text-decoration: none;
+}
+#add{
+    display: inline-block;
+    /*position: absolute;*/
+    /*top:19%;*/
+    /*left:25%;*/
+    width: 75px;
+    height: 30px;
+    text-align:center;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #FFE8EF;
+}
+#USER{
+    position:absolute;
+    right:2%;
+    top:2%;
+    width:50px;
+    height:100px;
+}
+
+#touxiang{
+    /*position:absolute;*/
+    /*right:2%;*/
+    /*top:2%;*/
+    width:50px;
+    height:50px;
+    border-radius:10px;
+}
+#imges{
+    width:100px;
+    height:100px;
+}
+header {
+    background-color: #000;
+    height: 35px;
+    color: #fff;
+    padding: 10px 0;
+}
+
+#left_div{
+    float:left;
+    width:200px;
+    height:760px;
+    box-shadow:0 0 5px 1px #999;
+    border-radius: 5px;
+}
+
+#left_div_nav{
+    list-style: none;
+}
+
+.li{
+    justify-content: center;
+    align-items:center ;
+    margin-top:25px;
+    margin-left:65px;
+}
+
+.li1{
+    /* 设置为弹性布局容器 */
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    margin-top:25px;
+    margin-left:-40px;
+}
+
+#logo {
+    font-size: 14px;
+    font-weight: bold;
+    float:left;
+    padding-top:1px;
+    padding-right:6px;
+}
+
+#title{
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top:2px;
+    float:left;
+}
+
+#navigation{
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top:10px;
+    padding-left:120px;
+    float:left;
+}
+
+#bar{
+    margin-top:10px;
+    margin-left:20px;
+    margin-right:20px;
+    padding:10px;
+    box-shadow:0 0 5px 1px #999;
+    border-radius: 5px;
+}
+
+#searchStr{
+    width: 250px;
+    height: 30px;
+    border: 1px solid #139be1;
+    border-radius: 5px;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    text-indent: 10px;
+}
+
+.search{
+    width: 60px;
+    height: 30px;
+    border: 1px solid #C8C4ED;
+    border-radius: 5px;
+    color: #766BD3;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #F1F0FB;
+}
+
+.reset{
+    width: 60px;
+    height: 30px;
+    border: 1px solid #FFCEBC;
+    border-radius: 5px;
+    color: #FE7843;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #F1F0FB;
+}
+
+#delete{
+    margin-top:10px;
+    margin-left:220px;
+    padding:10px;
+    box-shadow:0 0 5px 1px #999;
+    border-radius: 5px;
+    margin-right:20px;
+}
+
+.deletegoods{
+    width: 120px;
+    height: 30px;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #FFE8EF;
+}
+/*二手商品栏盒子*/
+#goods_list{
+    /*overflow: hidden;*/
+    border-radius: 5px;
+    margin-top:10px;
+    margin-left:20px;
+    text-align: center;
+    width:1400px;
+    box-shadow:0 0 5px 1px #999;
+    height:630px;
+    overflow: scroll;
+}
+/*表格的头部*/
+.tablecss th{
+    width: 100px;
+    line-height: 70px;
+}
+.tablecss{
+    border-collapse: separate;
+    border-spacing: 0px;
+    table-layout: fixed;
+    width:60%
+
+}
+/*表格单元格*/
+/*div.hidden{*/
+/*    overflow: hidden;*/
+/*    white-space: nowrap;*/
+/*    width:100px;*/
+/*    text-overflow: ellipsis;*/
+/*}*/
+.tablecss td{
+    width: 150px;
+    font-size: 14px;
+    line-height: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    border:1px black solid;
+}
+
+th{
+    background-color: #F8F8F8;
+}
+
+#table_name{
+    width: 180px;
+}
+
+#table_operation{
+    width: 180px;
+}
+
+#table_description{
+    width: 100px;
+}
+
+.button_delete{
+    width: 60px;
+    height: 30px;
+    border: 1px solid #FDA1BD;
+    border-radius: 5px;
+    color: #FB1572;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #F1F0FB;
+}
+.button_Pass{
+    width: 60px;
+    height: 30px;
+    border: 1px solid #ABE5BB;
+    border-radius: 5px;
+    color: #2CBE56;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #F1F0FB;
+}
+.button_refuse{
+    width: 60px;
+    height: 30px;
+    border: 1px solid #FDA1BD;
+    border-radius: 5px;
+    color: #FB1572;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #F1F0FB;
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加求购</title>
+    <link rel="stylesheet" th:href="@{/css/addwantbuy.css}">
+</head>
+<body>
+<code class="html"><button onclick="goBack()">返回</button></code>
+
+<h1>添加求购</h1>
+<form th:action="@{/addwantbuy}" method="post">
+    <table border="1" align="center">
+<!--        <tr>-->
+<!--            <td>序号</td>-->
+<!--            <td><input type="text" name="id"></td>-->
+<!--        </tr>-->
+        <tr>
+            <td>标题</td>
+            <td><input type="text" name="title"></td>
+        </tr>
+        <tr>
+            <td>内容</td>
+            <td><input type="text" name="content"></td>
+        </tr>
+<!--        <tr>-->
+<!--            <td>用户id</td>-->
+<!--            <td><input type="text" name="user_id"></td>-->
+<!--        </tr>-->
+        <tr>
+            <td>求购状态</td>
+            <td>
+                <select name="state">
+                    <option value="未解决">未解决</option>
+                    <option value="已解决">已解决</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>收获地址</td>
+            <td><input type="text" name="address"></td>
+        </tr>
+        <tr>
+            <td>求购/求租</td>
+            <td><input type="text" name="type"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="" id="" value="提交"></td>
+        </tr>
+    </table>
+</form>
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Counts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+
+            height: 100vh;
+            margin: 0;
+        }
+        #main-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /*transform-origin: top left;*/
+            /*transform: scale(2.5,2.5);*/
+        }
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            color: #444;
+        }
+        #main {
+            width: 50%;
+            height: 50%;
+        }
+        #chart {
+            width: 50%;
+            height: 50%;
+        }
+    </style>
+</head>
+<body>
+<div id="main-container">
+    <h1>商品状态数量</h1>
+    <div id="main"></div>
+
+    <div id="chart"></div>
+</div>
+
+<script th:src="@{/js/echarts.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const passedCount = /*[[${passedCount}]]*/ 0;
+    const fpassedCount = /*[[${fpassedCount}]]*/ 0;
+    /*]]>*/
+
+    var chartDom = document.getElementById('main');
+    var barChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: '5%',
+            left: 'center',
+            textStyle: {
+                color: '#555'
+            }
+        },
+        series: [
+            {
+                name: 'Status',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    { value: fpassedCount, name: '审核通过' },
+                    { value: passedCount, name: '审核中' }
+                ]
+            }
+        ]
+    };
+
+    option && barChart.setOption(option);
+
+    var app = {};
+
+    var chartDom = document.getElementById('chart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    const categories = (function () {
+        let now = new Date();
+        let res = [];
+        let len = 10;
+        while (len--) {
+            res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
+            now = new Date(+now - 2000);
+        }
+        return res;
+    })();
+    const categories2 = (function () {
+        let res = [];
+        let len = 10;
+        while (len--) {
+            res.push(10 - len - 1);
+        }
+        return res;
+    })();
+    const data = (function () {
+        let res = [];
+        let len = 10;
+        while (len--) {
+            res.push(Math.round(Math.random() * 1000));
+        }
+        return res;
+    })();
+    const data2 = (function () {
+        let res = [];
+        let len = 0;
+        while (len < 10) {
+            res.push(+(Math.random() * 10 + 5).toFixed(1));
+            len++;
+        }
+        return res;
+    })();
+    option = {
+        title: {
+            text: '实时监控'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#283b56'
+                }
+            }
+        },
+        legend: {},
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: { readOnly: false },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        dataZoom: {
+            show: false,
+            start: 0,
+            end: 100
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: true,
+                data: categories
+            },
+            {
+                type: 'category',
+                boundaryGap: true,
+                data: categories2
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                scale: true,
+                name: 'Price',
+                max: 30,
+                min: 0,
+                boundaryGap: [0.2, 0.2]
+            },
+            {
+                type: 'value',
+                scale: true,
+                name: 'Order',
+                max: 1200,
+                min: 0,
+                boundaryGap: [0.2, 0.2]
+            }
+        ],
+        series: [
+            {
+                name: '帖子发布量',
+                type: 'bar',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: data
+            },
+            {
+                name: '成交量',
+                type: 'line',
+                data: data2
+            }
+        ]
+    };
+    app.count = 11;
+    setInterval(function () {
+        let axisData = new Date().toLocaleTimeString().replace(/^\D*/, '');
+        data.shift();
+        data.push(Math.round(Math.random() * 1000));
+        data2.shift();
+        data2.push(+(Math.random() * 10 + 5).toFixed(1));
+        categories.shift();
+        categories.push(axisData);
+        categories2.shift();
+        categories2.push(app.count++);
+        myChart.setOption({
+            xAxis: [
+                {
+                    data: categories
+                },
+                {
+                    data: categories2
+                }
+            ],
+            series: [
+                {
+                    data: data
+                },
+                {
+                    data: data2
+                }
+            ]
+        });
+    }, 2100);
+
+    option && myChart.setOption(option);
+
+
+
+
+</script>
+</body>
+</html>

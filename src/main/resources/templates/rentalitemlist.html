@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>租赁商品</title>
+    <link rel="stylesheet" th:href="@{/css/rentalitemslist.css}">
+</head>
+
+<body>
+
+<!-- 搜索栏 -->
+<div id="bar">
+    <form id="searchForm" action="/searchRentalItemsByStr" method="post">
+        <input type="text" name="searchStr" id="searchStr">
+        <input type="submit" class="search" value="查询">
+        <input type="button" class="reset" value="重置" onclick="resetSearchForm()">
+    </form>
+</div>
+
+<!-- 批量删除栏 -->
+<div id="delete">
+    <input type="button" class="deletegoods" value="批量删除" onclick="dels()">
+    <div class="pagination">
+        <a th:if="${not page.isFirstPage}" th:href="@{/rentalitemsByAdmin(start=${page.pageNum - 1})}">上一页</a>
+        &nbsp;&nbsp;总页数:<span th:text="${page.pages}"></span>&nbsp;
+        &nbsp;&nbsp;当前页:<span  class=".active" th:text="${page.pageNum}"></span>&nbsp;
+        &nbsp;&nbsp;总记录数:<span th:text="${page.total}"></span>&nbsp;
+        &nbsp;&nbsp;当前页记录数:<span th:text="${page.size}"></span>&nbsp;
+        <a th:if="${not page.isLastPage}" th:href="@{/rentalitemsByAdmin(start=${page.pageNum + 1})}">下一页</a>
+    </div>
+</div>
+
+<!-- 二手商品栏 -->
+<div id="goods_list">
+    <table class="tablecss">
+            <tr>
+                <th class="small">选择</th>
+                <th class="small">序号</th>
+                <th class="table_bigger" >名称</th>
+                <th>租金/天</th>
+                <th>押金</th>
+                <th class="table_bigger" >详细</th>
+                <th id="address">发货地址</th>
+                <th class="table_bigger" >图片</th>
+                <th>上架日期</th>
+                <th>状态</th>
+                <th>分类</th>
+                <th class="small">用户ID</th>
+                <th class="small">所属用户</th>
+                <th class="small">上架状态</th>
+                <th>操作</th>
+            </tr>
+        <tr id="item" th:each="rental_item:${page.list}">
+            <td class="small"><input type="checkbox" class="ids" th:value="${rental_item.id}"></td>
+            <td class="small" th:text="${rental_item.id}"></td>
+            <td class="table_bigger" th:text="${rental_item.name}"></td>
+            <td th:text="${rental_item.price_one_day}"></td>
+            <td th:text="${rental_item.deposit}"></td>
+            <td class="table_bigger" th:text="${rental_item.introduce}"></td>
+            <td class="table_bigger" th:text="${rental_item.address}"></td>
+            <td ><img id="pimg" th:src="${rental_item.imgurl}" alt="无图，请联系商家"></td>
+            <td th:text="${#dates.format(rental_item.time,'YYYY-MM-dd')}"></td>
+            <td th:text="${rental_item.state}"></td>
+            <td th:text="${rental_item.type}"></td>
+            <td class="small" th:text="${rental_item.user_id}"></td>
+            <td class="small" th:text="${rental_item.user_name}"></td>
+            <td class="small" th:text="${rental_item.remark}"></td>
+            <td id="table_operation">
+                <a class="button_update" th:href="@{'/toupdaterentalitem/'+${rental_item.id}}">编辑</a>
+                <a class="button_delete" th:href="@{'/deleteRentalItem/'+${rental_item.id}}">删除</a>
+            </td>
+        </tr>
+    </table>
+    <br>
+</div>
+</body>
+<script th:src="@{/js/rentalitemlist.js}"></script>
+<script th:src="@{/js/jquery-3.1.0.min.js}"></script>
+</html>

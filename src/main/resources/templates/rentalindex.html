@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户首页</title>
+    <link rel="stylesheet" th:attr="href=@{/css/rentalindex.css}">
+    <style>
+        #tobuy{
+            position: absolute;
+            width: 100px;
+            height: 50px;
+            background-color: #c8c8c2;
+            top: 70px;
+            left: 10px;
+            font-size: 20px;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+            border-radius: 10px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+
+        }
+
+        #tobuy:hover{
+            background-color: #62a39f;
+        }
+        #tobuy a{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <!--        搜索框部分-->
+    <div id="tobuy"><a th:href="@{/index}">返回</a></div>
+    <div id="search_div">
+        <div id="bar">
+            <form id="searchForm" action="/searchRentalItemsByStrByUser" method="post">
+                <input type="text" name="searchStr" id="searchStr">
+                <input type="submit" class="search" value="查询">
+                <input type="button" class="reset" value="重置" onclick="resetSearchForm()">
+            </form>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div id="s_left_div"></div>
+    <div id="s_center_div">
+        <div id="center_select_div">
+            <div id="kind_select_div">
+                <form action="/findRentalItemsByType" method="post" id="kind_select_submit">
+                    <input type="hidden" id="selectvalue" th:value="${type}">
+                    <select id="kind_select" name="category">
+                        <option style="display: none">种类</option>
+                        <option value="全部">全部</option>
+                        <option value="图书">图书</option>
+                        <option value="耳机音响">耳机音响</option>
+                        <option value="乐器">乐器</option>
+                        <option value="篮球">篮球</option>
+                        <option value="足球">足球</option>
+                        <option value="自行车">自行车</option>
+                        <option value="电动车">电动车</option>
+                        <option value="数码产品">数码产品</option>
+                        <option value="家居">家居</option>
+                        <option value="衣物">衣物</option>
+                        <option value="实用工具">实用工具</option>
+                        <option value="食物">食物</option>
+                        <option value="生活用品">生活用品</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div id="center_commodity_div">
+            <div class="commodity" th:each="index_commodity:${page.list}">
+                <input type="hidden" id="commodity_id" th:value="${index_commodity.id}">
+                <div class="commodity_img">
+                    <a th:href="@{'/rentalitembyuser/'+${index_commodity.id}}">
+                        <img th:src="${index_commodity.imgurl}" alt="">
+                    </a>
+                </div>
+                <div class="commodity_introduce" th:utext="${index_commodity.introduce}">描述</div>
+                <div class="commodity_price"><span th:utext="'￥'+${index_commodity.price_one_day}"></span></div>
+            </div>
+        </div>
+        <div class="pagination">
+            <a th:if="${not page.isFirstPage}" th:href="@{/findRentalItemsByType(start=${page.pageNum - 1})}">上一页</a>
+            &nbsp;&nbsp;总页数:<span th:text="${page.pages}"></span>&nbsp;
+            &nbsp;&nbsp;当前页:<span  class=".active" th:text="${page.pageNum}"></span>&nbsp;
+            &nbsp;&nbsp;总记录数:<span th:text="${page.total}"></span>&nbsp;
+            &nbsp;&nbsp;当前页记录数:<span th:text="${page.size}"></span>&nbsp;
+            <a th:if="${not page.isLastPage}" th:href="@{/findRentalItemsByType(start=${page.pageNum + 1})}">下一页</a>
+        </div>
+    </div>
+    <div id="s_right_div">
+
+    </div>
+</section>
+
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.1.0.min.js}" charset="UTF-8"></script>
+<script type="text/javascript" th:src="@{/js/rentalindex.js}" charset="UTF-8"></script>
+</html>

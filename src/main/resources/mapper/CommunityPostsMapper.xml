@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.CommunityPostsMapper">
+    <select id="findAllCommunityPosts" resultType="CommunityPost">
+        select *
+        from product
+    </select>
+    <select id="findCommunityPostById" resultType="CommunityPost">
+        select *
+        from product
+        where id=#{id}
+    </select>
+
+
+    <update id="updateCommunityPost" parameterType="CommunityPost">
+        update product set
+                           name=#{name},price=#{price},imgurl=#{imgurl},type=#{type},time=#{time},user_id=#{user_id},title=#{title},introduce=#{introduce},state=#{state}
+    </update>
+
+    <update id="updateUserPost" parameterType="CommunityPost">
+        update product set
+                           name=#{name},price=#{price},imgurl=#{imgurl},type=#{type},time=#{time},user_id=#{user_id},title=#{title},introduce=#{introduce}
+        where id = #{id}
+    </update>
+
+    <update id="updateUserPostimgnull" parameterType="CommunityPost">
+        update product set
+                           name=#{name},price=#{price},type=#{type},time=#{time},user_id=#{user_id},title=#{title},introduce=#{introduce}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCommunityPost" parameterType="int" >
+        delete from product where id=#{id}
+    </delete>
+
+    <select id="searchCommunityPostsByStr" parameterType="java.lang.String" resultType="CommunityPost">
+        select * from product
+        where 1=1
+        <if test="searchStr!=null and searchStr!=''">
+            AND name like concat('%',#{searchStr},'%')
+            or price like concat('%',#{searchStr},'%')
+            or type like concat('%',#{searchStr},'%')
+
+            or imgurl like concat('%',#{searchStr},'%')
+            or introduce like concat('%',#{searchStr},'%')
+            or user_id like concat('%',#{searchStr},'%')
+            or title like concat('%',#{searchStr},'%')
+            or state like concat('%',#{searchStr},'%')
+
+        </if>
+    </select>
+
+    <delete id="deleteCommunityPosts">
+        delete from product where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="addUserPost" useGeneratedKeys="true" keyProperty="id" parameterType="CommunityPost">
+        insert into product(name,price,imgurl,type,time,user_id,title,introduce)
+        values(#{name},#{price},#{imgurl},#{type},#{time},#{user_id},#{title},#{introduce})
+    </insert>
+
+    <select id="countStateZ" parameterType="int">
+        SELECT COUNT(*)
+        FROM product
+        where state='审核中';
+    </select>
+    <select id="countStateG" parameterType="int">
+        SELECT COUNT(*)
+        FROM product
+        where state='审核通过';
+    </select>
+    <select id="findAllCommunityPostByUId" resultType="CommunityPost">
+        select *
+        from product
+        where user_id=#{user_id}
+    </select>
+</mapper>

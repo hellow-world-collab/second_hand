@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户首页</title>
+    <link rel="stylesheet" th:attr="href=@{/css/index.css}">
+</head>
+<body>
+    <header>
+<!--        头部top盒子-->
+        <div id="top_div">
+
+<!--          头部左盒子  //主标志往左边靠-->
+            <div id="left_div">
+                <img class="logo" th:src="@{/img/logo.png}" alt="logo">
+            </div>
+ <!--          头部左盒子  //主标志往左边靠-->
+
+
+
+<!--导航栏部分-->
+            <div id="nav_div">
+
+                <ul id="nav_ul">
+                    <li>热卖专区</li>
+                    <li><a  th:href="@{/community}">社区广场</a></li>
+                    <li>求购专区</li>
+                    <li><a  th:href="@{/start}">二手交易圈</a></li>
+                    <li><a  th:href="@{/findRentalItemsByType}">商品租赁</a></li>
+                    <li>系统公告</li>
+                </ul>
+            </div>
+<!--导航栏部分-->
+            <div id="notice">
+                <div id="notice_title">公告
+                    <div id="tui"><img th:src="@{/icon/叉叉.png}">
+                    </div>
+                </div>
+                <div id="notice_content">
+                    <ul>
+                        <li th:text="${notice_text}"></li>
+                    </ul>
+                </div>
+            </div>
+<!--      头部右盒子      //信息和个人中心往右边靠-->
+            <div id="right_div">
+
+<!--                聊天信息-->
+<!--                <div id="chat_div">-->
+<!--                    <span>-->
+<!--                        <img th:src="@{/icon/通信消息.png}" alt="">-->
+<!--                    </span>-->
+<!--                    聊天信息-->
+
+<!--                </div>-->
+<!--                聊天信息-->
+
+<!--                个人中心-->
+                <div id="personal_center_div">
+                    <span>
+<!--                        <img id="touxiang" th:src="${session.loginUser.imgurl}">-->
+                        <img th:src="${session.loginUser.imgurl}" alt="头像">
+                        <ul id="dropdown_nav">
+                                <div id="conule"></div>
+                                <li class="li">个人中心</li>
+                                <li class="li">我的订单</li>
+                                <li class="li"><a  th:href="@{/myproducts}">我的商品</a></li>
+                                <li class="li"><a  th:href="@{/Myposts}">我的帖子</a></li>
+                                <li class="li">我的求购</li>
+                                <li class="li"><a  th:href="@{/useraddressesU}">我的地址</a></li>
+
+                                <li class="li"><a th:href="@{/login}">退出登录</a></li>
+                        </ul>
+
+                    </span>
+                    <span th:text="${session.loginUser.username}"></span>
+                    <img th:src="@{/icon/angle-down.png}" alt="">
+
+                </div>
+<!--                个人中心-->
+
+
+            </div>
+
+
+<!--      头部右盒子      //信息和个人中心往右边靠-->
+        </div>
+
+
+
+ <!--        搜索框部分-->
+        <div id="search_div">
+            <span id="description">好看，好用，好玩，都在这里</span>
+            <table>
+                <tr>
+
+                    <td>
+                        <span id="logo_span">
+                            <img th:src="@{/icon/查询.png}" alt="">
+                        </span>
+                    </td>
+                    <td>
+                        <hr id="hr">
+                        <form action="/index2" method="post" id="searchForm">
+                        <input id="search_input" name="searchStr" type="text" th:value="搜索商品点击这里哟" th:maxlength="50"/>
+                        </form>
+                    </td>
+                    <td>
+                        <span id="logo_search">
+                            <img th:src="@{/icon/查询.png}" alt="">
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+<!--        搜索框部分-->
+    </header>
+
+    <section>
+        <div id="s_left_div"></div>
+
+        <div id="s_center_div">
+            <div id="center_select_div">
+                     <div id="time_select_div">
+
+<!--                            <select id="time_select">-->
+<!--                                <option value="1">最近</option>-->
+<!--                                <option value="2">最热</option>-->
+
+<!--                            </select>-->
+                     </div>
+                     <div id="kind_select_div">
+                            <form action="/select_Index_Commodity_By_Type" method="post" id="kind_select_submit">
+                                <input type="hidden" id="selectvalue" th:value="${type}">
+                         <select id="kind_select" name="commodity_Type">
+                             <option value="全部">全部</option>
+                             <option value="图书">图书</option>
+                             <option value="耳机音响">耳机音响</option>
+                             <option value="乐器">乐器</option>
+                             <option value="篮球">篮球</option>
+                             <option value="足球">足球</option>
+                             <option value="自行车">自行车</option>
+                             <option value="电动车">电动车</option>
+                             <option value="数码产品">数码产品</option>
+                             <option value="家居">家居</option>
+                             <option value="衣物">衣物</option>
+                             <option value="实用工具">实用工具</option>
+                             <option value="食物">食物</option>
+                             <option value="生活用品">生活用品</option>
+                         </select>
+
+                         </form>
+
+                    </div>
+             </div>
+
+            <div id="center_commodity_div">
+<!--                <div id="center_commodity_div_list" th:each="index_commodity:${index_commoditys}">-->
+                    <div class="commodity" th:each="index_commodity:${index_commoditys}">
+                        <input type="hidden" id="commodity_id" th:value="${index_commodity.commodity_id}">
+                        <div class="commodity_img"><img th:src="${index_commodity.commodity_imgurl}" alt=""></div>
+                        <div class="commodity_introduce" th:utext="${index_commodity.commodity_introduce}">描述</div>
+                        <div class="commodity_price"><span  th:utext="'￥'+${index_commodity.commodity_price}">￥996</span></div>
+                    </div>
+
+
+            </div>
+
+
+            <div id="center_changepage_div">
+<!--                <div id="left_button"><img th:src="@{/icon/angle-left.png}" alt=""></div>-->
+<!--&lt;!&ndash;                <div id="center_pagebutton">center_pagebutton</div>&ndash;&gt;-->
+<!--                <ul id="center_pagebutton">-->
+<!--                    <li class="pageli">1</li>-->
+<!--                    <li class="pageli">2</li>-->
+
+<!--                </ul>-->
+<!--                <div id="right_button"><img th:src="@{/icon/angle-right.png}" alt=""></div>-->
+
+            </div>
+
+        </div>
+        <div id="s_right_div">
+            <div id="publish"><a   th:href="@{/toaddUserPosts}">发布商品</a></div>
+            <div id="tobuy"><a th:href="@{/toaddwantbuy}">我要求购</a></div>
+            <div id="shou">
+
+                <a id="ai" href="#" onclick="toggle()">聊天AI</a>
+
+                <div id="popup">
+                    <iframe src="http://127.0.0.1:5000/"  frameborder="0"></iframe>
+                    <a href="#" onclick="toggle()"><p id="close">CLose</p> </a>
+                </div>
+            </div>
+            <script type="text/javascript">
+                function toggle(){
+                    var shou = document.getElementById('shou');
+                    shou.classList.toggle('active');
+                    var popup = document.getElementById('popup');
+                    popup.classList.toggle('active');
+                }
+            </script>
+            <div id="to_top">
+                <img th:src="@{/icon/回到顶部.png}" alt="">
+
+            </div>
+        </div>
+
+    </section>
+
+
+
+
+    <footer>
+
+    </footer>
+
+
+
+
+
+
+
+
+
+</body>
+
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.js}" charset="UTF-8"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}" charset="UTF-8"></script>
+
+
+
+</html>

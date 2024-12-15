@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+</head>
+<body>
+<h1>添加商品</h1><br><br>
+<code class="html"><button onclick="goBack()">返回</button></code>
+
+<form th:action="@{/addProductByUser}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="user_id" th:value="${session.loginUser.id}">
+<table border="1" align="center">
+<!--    <tr>-->
+<!--        <td>编号</td>-->
+<!--        <td><input type="text" name="id" th:value="${product.id}" readonly></td>-->
+<!--    </tr>-->
+    <tr>
+        <td>商品名</td>
+        <td><input type="text" name="name"></td>
+    </tr>
+    <tr>
+        <td>价格</td>
+        <td><input type="text" name="price"></td>
+    </tr>
+    </tr>
+        <td>上架时间</td>
+        <td><input type="date" name="time"></td>
+    </tr>
+    <tr>
+        <td>类别</td>
+        <td>
+<!--            <input type="hidden" id="selectvalue" th:value="${product.type}">-->
+            <select name="type" id="type">
+                <option value="图书">图书</option>
+                <option value="数码产品">数码产品</option>
+                <option value="生活用品">生活用品</option>
+                <option value="娱乐产品">娱乐产品</option>
+                <option value="食物">食物</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>标题</td>
+        <td><input type="text" name="title"></td>
+    </tr>
+    <tr>
+        <td>介绍</td>
+        <td><textarea class="txt" cols="30" rows="10" name="introduce"></textarea></td>
+    </tr>
+    <tr>
+        <td>商品图片</td>
+        <td><input type="file" name="imges"></td>
+    </tr>
+    <tr>
+        <td>发货地址</td>
+        <td><input type="text" name="address"></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><input type="submit" value="添加"></td>
+    </tr>
+</table>
+<!--    <script src="js/jquery-3.7.1.js"></script>-->
+<!--    <script>-->
+<!--        var backendValue = document.getElementById("selectvalue").value; // 后端传递的值-->
+<!--        var select = document.getElementById("type"); // 获取select元素-->
+<!--        for (var i = 0; i < select.options.length; i++) {-->
+<!--            if (select.options[i].value === backendValue) {-->
+<!--                select.options[i].selected = true; // 选中匹配的option-->
+<!--                break;-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+    <script>
+        function goBack() {
+            window.history.back();
+
+        }
+    </script>
+</form>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改帖子</title>
+</head>
+<body>
+<code class="html"><button onclick="goBack()">返回</button></code>
+<form th:action="@{/updateUserPost}" method="post" enctype="multipart/form-data">
+    <table border="1" align="center">
+        <tr>
+            <td>序号</td>
+            <td><input type="text" name="id" th:value="${post.id}" readonly></td>
+        </tr>
+        <tr>
+            <td>物品名字</td>
+            <td><input type="text" name="name" th:value="${post.name}"></td>
+        </tr>
+        <tr>
+            <td>价格</td>
+            <td><input type="text" name="price" th:value="${post.price}"></td>
+        </tr>
+        <tr>
+            <td>图片</td>
+            <td><input type="file" name="imges" th:value="${post.imgurl}"></td>
+        </tr>
+        <tr>
+            <td>圈子</td>
+            <td>
+                <input type="hidden" id="selectvalue" th:value="${post.type}">
+                <select name="type" id="type" th:checked="${post.type}">
+                    <option value="图书">图书</option>
+                    <option value="数码产品">数码产品</option>
+                    <option value="生活用品">生活用品</option>
+                    <option value="娱乐产品">娱乐产品</option>
+                    <option value="食物">食物</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>时间</td>
+            <td><input type="date" name="time" th:value="${#dates.format(post.time,'YYYY-MM-dd')}"></td>
+        </tr>
+        <tr>
+            <td>用户ID</td>
+            <td><input type="text" name="user_id" th:value="${post.user_id}"></td>
+        </tr>
+        <tr>
+            <td>标题</td>
+            <td><input type="text" name="title" th:value="${post.title}"></td>
+        </tr>
+        <tr>
+            <td>简介</td>
+            <td><textarea class="txt" cols="80" rows="10" name="introduce" th:value="${post.introduce}">[[${post.introduce}]]</textarea></td>
+
+        </tr>
+
+
+        <tr>
+            <td colspan="2" align="center"><input type="submit" value="修改"></td>
+        </tr>
+    </table>
+</form>
+<script src="js/jquery-3.7.1.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>
+<script>
+    var backendValue = document.getElementById("selectvalue").value; // 后端传递的值
+    var select = document.getElementById("type"); // 获取select元素
+    for (var i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === backendValue) {
+            select.options[i].selected = true; // 选中匹配的option
+            break;
+        }
+    }
+</script>
+</body>
+</html>

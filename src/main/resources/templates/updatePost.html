@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改帖子</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            transform-origin: center;
+            transform: scale(1.3,0.905);
+
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+            vertical-align: top;
+        }
+        input[type="text"], input[type="date"], select, textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="file"] {
+            border: none;
+            font-size: 16px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        input[type="submit"], button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #45a049;
+        }
+        button {
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <button onclick="goBack()">返回</button>
+    <form th:action="@{/updatePost}" method="post" enctype="multipart/form-data">
+        <table border="1" align="center">
+            <tr>
+                <td>序号</td>
+                <td><input type="text" name="id" th:value="${post.id}" readonly></td>
+            </tr>
+            <tr>
+                <td>物品名字</td>
+                <td>
+                    <input type="text" name="name" th:value="${post.name}"></td>
+            </tr>
+            <tr>
+                <td>价格</td>
+                <td><input type="text" name="price" th:value="${post.price}"></td>
+            </tr>
+            <tr>
+                <td>图片</td>
+                <td><input type="file" name="imges" th:value="${post.imgurl}"></td>
+            </tr>
+            <tr>
+                <td>圈子</td>
+                <td>
+                    <input type="hidden" id="selectvalue" th:value="${post.type}">
+                    <select name="type" id="type" th:checked="${post.type}">
+                        <option value="图书">图书</option>
+                        <option value="数码产品">数码产品</option>
+                        <option value="生活用品">生活用品</option>
+                        <option value="娱乐产品">娱乐产品</option>
+                        <option value="食物">食物</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>时间</td>
+                <td><input type="date" name="time" th:value="${#dates.format(post.time,'YYYY-MM-dd')}"></td>
+            </tr>
+            <tr>
+                <td>用户ID</td>
+                <td><input type="text" name="user_id" th:value="${post.user_id}"></td>
+            </tr>
+            <tr>
+                <td>标题</td>
+                <td><input type="text" name="title" th:value="${post.title}"></td>
+            </tr>
+            <tr><td>简介</td>
+                <td><textarea class="txt" cols="80" rows="10" name="introduce" th:value="${post.introduce}">[[${post.introduce}]]</textarea></td>
+            </tr>
+            <tr>
+                <td>类别</td>
+                <td>
+                    <input type="hidden" id="selectstatevalue" th:value="${post.state}">
+                    <select name="state" id="state" th:checked="${post.state}">
+                        <option value="审核通过">审核通过</option>
+                        <option value="审核中">审核中</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="修改"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script src="js/jquery-3.7.1.js"></script>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var selectValue = document.getElementById("selectvalue").value; // 后端传递的值
+        var select = document.getElementById("type"); // 获取select元素
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === selectValue) {
+                select.options[i].selected = true; // 选中匹配的option
+                break;
+            }
+        }
+
+        var selectStateValue = document.getElementById("selectstatevalue").value; // 后端传递的值
+        var selectState = document.getElementById("state"); // 获取select元素
+        for (var i = 0; i < selectState.options.length; i++) {
+            if (selectState.options[i].value === selectStateValue) {
+                selectState.options[i].selected = true; // 选中匹配的option
+                break;
+            }
+        }
+    });
+</script>
+</body>
+</html>

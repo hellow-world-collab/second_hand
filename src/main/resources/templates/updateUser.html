@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑用户</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        #edit-form {
+            width: 50%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="text"], input[type="file"] {
+            width: 95%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>编辑用户</h1>
+<div id="edit-form">
+    <button onclick="goBack()">返回</button>
+    <form th:action="@{/updateUser}" method="post" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <th>编号</th>
+                <td><input type="text" name="id" th:value="${user.id}" readonly></td>
+            </tr>
+            <tr>
+                <th>用户名</th>
+                <td><input type="text" name="username" th:value="${user.username}"></td>
+            </tr>
+            <tr>
+                <th>密码</th>
+                <td><input type="text" name="password" th:value="${user.password}"></td>
+            </tr>
+            <tr>
+                <th>电话</th>
+                <td><input type="text" name="phone" th:value="${user.phone}"></td>
+            </tr>
+            <tr>
+                <th>邮箱</th>
+                <td><input type="text" name="email" th:value="${user.email}"></td>
+            </tr>
+            <tr>
+                <th>头像</th>
+                <td><input type="file" name="imges" th:value="${user.imgurl}"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="修改"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+</html>

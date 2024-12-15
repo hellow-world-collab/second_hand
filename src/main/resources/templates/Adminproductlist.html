@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>买卖商品</title>
+    <link rel="stylesheet" th:href="@{/css/productlistAdmin.css}">
+</head>
+
+<body>
+<!--&lt;!&ndash; 头部导航栏 &ndash;&gt;-->
+<!--<div id="header">-->
+<!--    <div id="logo">-->
+<!--        <img th:src="@{/img/01.png}" alt="logo" width="34px">-->
+<!--    </div>-->
+<!--    <div id="title">-->
+<!--        <h4>后台管理</h4>-->
+<!--    </div>-->
+<!--    <div id="navigation">-->
+<!--        <span>信息管理&nbsp>&nbsp买卖商品</span>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; 左侧列表栏 &ndash;&gt;-->
+<!--<nav class="shell">-->
+<!--    <ul class="buttons">-->
+<!--        <li class="li">-->
+<!--            <a href="#xtsy">系统首页</a>-->
+<!--        </li>-->
+
+<!--        <li class="li">-->
+<!--            信息管理-->
+<!--            <ul>-->
+<!--                <li><a href="#flxx">分类信息</a></li>-->
+<!--                <li><a th:href="@{productsa}">买卖商品</a></li>-->
+<!--                <li><a th:href="@{rentalitemsByAdmin}">租赁商品</a></li>-->
+<!--                <li><a href="#ddxx">订单信息</a></li>-->
+<!--                <li><a href="#qzxx">圈子信息</a></li>-->
+<!--                <li><a href="#sqtz">社区帖子</a></li>-->
+<!--                <li><a href="#qgxx">求购信息</a></li>-->
+<!--                <li><a href="#ggxx">公告信息</a></li>-->
+<!--                <li><a th:href="@{useraddresses}">地址信息</a></li>-->
+<!--                <li>反馈信息</li>-->
+<!--            </ul>-->
+<!--        </li>-->
+
+<!--        <li class="li">-->
+<!--            用户管理-->
+<!--            <ul>-->
+<!--                <li>管理员信息</li>-->
+<!--                <li>用户信息</li>-->
+<!--            </ul>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</nav>-->
+
+<!-- 搜索栏 -->
+<div id="bar">
+    <form id="searchForm" action="/searchProductsByStra" method="post">
+        <input type="text" name="searchStr" id="searchStr">
+        <input type="submit" class="search" value="查询">
+        <input type="button" class="reset" value="重置" onclick="resetSearchForm()">
+    </form>
+</div>
+
+<!-- 批量删除栏 -->
+<div id="delete">
+    <input type="button" class="deletegoods" value="批量删除" onclick="dels()">
+</div>
+
+<!-- 二手商品栏 -->
+<div id="goods_list">
+    <table class="tablecss">
+            <tr>
+                <th>选择</th>
+                <th>序号</th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>详细</th>
+                <th>发货地址</th>
+                <th>图片</th>
+                <th>上架日期</th>
+                <th>状态</th>
+                <th>分类</th>
+                <th>用户ID</th>
+                <th>所属用户</th>
+                <th>上架状态</th>
+                <th>操作</th>
+            </tr>
+        <tr id="item" th:each="product:${page.list}">
+            <td><input type="checkbox" class="ids" th:value="${product.id}"></td>
+            <td th:text="${product.id}"></td>
+            <td id="table_name" th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td id="table_description" th:text="${product.introduce}"></td>
+            <td th:text="${product.address}"></td>
+<!--            <td th:text="${product.imgurl}"></td>-->
+            <td ><img id="pimg" th:src="${product.imgurl}" alt="无图，请联系商家"></td>
+            <td th:text="${#dates.format(product.time,'YYYY-MM-dd')}"></td>
+            <td th:text="${product.remark}"></td>
+            <td th:text="${product.type}"></td>
+            <td th:text="${product.user_id}"></td>
+            <td th:text="${product.user_name}"></td>
+            <td th:text="${product.state}"></td>
+            <td id="table_operation">
+                <a class="button_update" th:href="@{'/toupdateproducta/'+${product.id}}">编辑</a>
+                <a class="button_delete" th:href="@{'/deleteProducta/'+${product.id}}">删除</a>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <a th:if="${not page.isFirstPage}" th:href="@{/productsa(start=${page.pageNum - 1})}">上一页</a>
+    &nbsp;&nbsp;总页数:<span th:text="${page.pages}"></span>&nbsp;
+    &nbsp;&nbsp;当前页:<span th:text="${page.pageNum}"></span>&nbsp;
+    &nbsp;&nbsp;总记录数:<span th:text="${page.total}"></span>&nbsp;
+    &nbsp;&nbsp;当前页记录数:<span th:text="${page.size}"></span>&nbsp;
+    <a th:if="${not page.isLastPage}" th:href="@{/productsa(start=${page.pageNum + 1})}">下一页</a>
+</div>
+</body>
+<script th:src="@{/js/productlist.js}"></script>
+<script src="js/jquery-3.1.0.min.js"></script>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.discussMapper">
+    <select id="getDiscuss" resultMap="getDiscussResult">
+        SELECT
+            ROW_NUMBER() OVER (ORDER BY d.id) AS sequence_index,
+            d.id as dis_id,
+            user_id,
+            u.username,
+            discuss_text
+        FROM
+            t_discuss d
+                JOIN users u on u.id=user_id
+        where product_id=#{product_id}
+    </select>
+    <resultMap id="getDiscussResult" type="discuss">
+        <id property="dis_id" column="dis_id"></id>
+        <result property="index" column="sequence_index"></result>
+        <result property="user_id" column="user_id"></result>
+        <result property="user_name" column="username"></result>
+        <result property="discuss_text" column="discuss_text"></result>
+
+
+    </resultMap>
+
+
+    <select id="getReply" resultMap="getReplyResult">
+        SELECT
+            ROW_NUMBER() OVER (ORDER BY d.id) AS sequence_index,
+            d.id as dis_id,
+            rep.id as reply_id,
+            d.user_id,
+            discuss_text,
+            rep.user_id as the_userid_reply,
+            u.username as the_user_name,
+            rep.reply_user_id,
+            user.username as reply_user_name,
+            reply_text
+        FROM
+-- JOIN t_discuss duser
+
+t_discuss d,t_reply rep
+                JOIN users u on u.id=rep.user_id
+                JOIN users user on user.id=rep.reply_user_id
+        where rep.parent_id=d.id and product_id=#{product_id}
+    </select>
+    <resultMap id="getReplyResult" type="discuss">
+        <id property="dis_id" column="dis_id"></id>
+        <result property="index" column="sequence_index"></result>
+        <result property="reply_id" column="reply_id"></result>
+        <result property="user_id" column="user_id"></result>
+        <result property="discuss_text" column="discuss_text"></result>
+        <result property="the_userid_reply" column="the_userid_reply"></result>
+        <result property="reply_user_id" column="reply_user_id"></result>
+        <result property="reply_text" column="reply_text"></result>
+    </resultMap>
+
+
+
+    <insert id="addDiscussHost" useGeneratedKeys="true"  keyProperty="id">
+        insert into t_discuss
+        values (null,#{user_id},#{discuss_text},#{product_id})
+    </insert>
+    <insert id="addReply" useGeneratedKeys="true"  keyProperty="id">
+        insert into t_reply
+        values (null,#{user_id},#{reply_text},#{parent_id},#{reply_user_id})
+    </insert>
+
+
+</mapper>
+
+
+

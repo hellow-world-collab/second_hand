@@ -1,0 +1,26 @@
+//重置按钮
+function resetSearchForm() {
+    document.getElementById("searchStr").value = ""; // 清空搜索框内容
+}
+
+//批量删除按钮
+function dels(){
+    if(confirm("确定删除所选地址吗？")){
+        var ids="";
+        $(".ids").each(
+            function (i,e){
+                if($(e).is(":checked")){
+                    var id=$(e).val();
+                    ids+=id+",";
+                }
+            }
+        );
+        if(ids.length==0){
+            alert("未选择任何地址,请选择要删除的地址！");
+        }else{
+            ids=ids.substr(0,ids.length-1);
+            location.href="deleteUserAddresses?id="+ids;
+            //构造出类似deleteProducts?id=1,2,3这样的URL,后台可用数组接收
+        }
+    }
+}

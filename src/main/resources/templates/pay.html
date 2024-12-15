@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单确认界面</title>
+    <link rel="stylesheet" th:href="@{/css/pay.css}">
+</head>
+<body>
+<div class="container">
+    <h1>订单确认</h1>
+    <div class="actions">
+        <a th:href="@{/addaddressByU}">添加地址</a>
+        <button onclick="goBack()">返回</button>
+    </div>
+
+    <form th:action="@{/payon}" method="post">
+        <input type="hidden" name="order" th:value="${order}">
+        <input type="hidden" name="user" th:value="${session.loginUser}">
+        <table>
+            <tr>
+                <th>订单编号</th>
+                <td><span th:text="${order.order_number}"></span></td>
+            </tr>
+            <tr>
+                <th>商品名</th>
+                <td><span th:text="${order.product.name}"></span></td>
+            </tr>
+            <tr>
+                <th>商品价格</th>
+                <td><span th:text="${order.product.price}"></span></td>
+            </tr>
+            <tr>
+                <th>商品种类</th>
+                <td><span th:text="${order.product.type}"></span></td>
+            </tr>
+            <tr>
+                <th>商品图片</th>
+                <td><img th:src="${order.product.imgurl}" alt="无图片,请联系商家看图"></td>
+            </tr>
+            <tr>
+                <th>发货地址</th>
+                <td><span th:text="${order.product.address}"></span></td>
+            </tr>
+            <tr>
+                <th>请选择您的收获地址</th>
+                <td>
+                    <select name="Useraddress" id="address">
+                        <option th:each="option : ${options}" th:text="${option}" th:value="${option}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>您的电话</th>
+                <td><input type="text" th:value="${session.loginUser.phone}" name="phonenumber"></td>
+            </tr>
+        </table>
+        <div class="actions">
+            <input type="submit" id="pay" value="支付">
+        </div>
+    </form>
+</div>
+
+<script src="js/jquery-3.7.1.js"></script>
+<script>
+    var select = document.getElementById("address");
+    if (select.options.length == 0) {
+        alert("没有收货地址，请添加收货地址");
+        $("#pay").attr("disabled", true);
+    } else {
+        $("#pay").attr("disabled", false);
+    }
+</script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+</html>

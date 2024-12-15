@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>二手交易市场</title>
+    <style>
+        * {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        iframe{
+          width: 100% ;
+          height: 100% ;
+          transform-origin: bottom right;
+            transform: scale(0.829,0.905);
+        }
+
+        .container {
+            position: fixed;
+            width: 100%;
+            max-width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 0 20px;
+            box-sizing: border-box;
+            z-index: 999;
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            margin-right: 10px;
+        }
+
+        .text {
+            font-size: 30px;
+        }
+        .shell{
+            top: 80px;
+            position:fixed;
+            width: 280px;
+            height: 100%;                /* 改为100%*/
+            background-color: #8a98c9;
+        }
+        .buttons{
+            margin: 60px 0;
+            color: #fff;
+        }
+        .li{
+            letter-spacing: 2px;
+            font: 600 17px '';
+            padding: 16px 52px;
+            transition: .3s;
+        }
+        .li::after{
+            position: absolute;
+            left: 20px;
+            margin-top: -22px;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        .buttons>li:hover{
+            background-color: #beb5df;
+        }
+
+        .li ul{
+            width: 0;
+            height: 100%;
+            padding: 60px 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            overflow: hidden;
+            background-color: #59699b;
+            transition: .3s;
+        }
+
+        .li ul li{
+            padding: 16px 24px;
+            transition: .3s;
+        }
+
+        .li:hover ul{
+            width: 228px;
+        }
+        .li ul li:hover{
+            background-color: #828eb9;
+        }
+        #nei{
+            height: 10000px;
+            width: 100%;
+            /*background-color: rgba(128, 128, 128, 0.5);*/
+            /* padding:  80px 0 0 280px; */
+        }
+        .nr{
+            width: 100%;
+            height: 100vh;
+
+        }
+        #xtsy{
+            background-color: #d3dafa;
+        }
+        /*#flxx{*/
+        /*    background-color: #566edd;*/
+        /*}*/
+        #essp{
+            /*background-color: #59699b;*/
+        }
+        /*#ddxx{*/
+        /*    background-color: #731f84;*/
+        /*!*}*!*/
+        /*#qzxx{*/
+        /*    background-color: #59699b;*/
+        /*}*/
+        #sqtz{
+            background-color: rgba(128, 128, 128,10%);
+        }
+
+        /*#qgxx{*/
+        /*    background-color: #093220;*/
+        /*}*/
+
+
+        input{
+            height: 38px;
+            width: 100px;
+            margin: 0 0 0 20px;
+            border-radius: 10px;
+        }
+
+        iframe{
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        #c1{
+            background: url("img/flage1.png") no-repeat left center;
+            background-size: contain;
+        }
+        #c2{
+            background: url("img/flage2.png") no-repeat left center;
+            background-size: contain;
+        }
+        #c3{
+            background: url("../img/flage3.png") no-repeat ;
+            background-position: left center;
+            background-size: contain;
+        }
+        #c4{
+            background: url("../img/falge5.png") no-repeat ;
+            background-position: left center;
+            background-size: contain;
+        }
+        #back{
+            height: 40px;
+            width: 150px;
+            font-size: 30px;
+            color: #ffffff;
+            margin: 0 0 0 1200px;
+            background-color: black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img class="logo" src="../img/logo.png" alt="logo">
+    <span class="text">后台管理</span>
+    <a id="back" th:href="@{/login}"><em>退出登录</em></a>
+</div>
+
+
+<nav class="shell">
+    <ul class="buttons">
+        <li class="li" id="c1">
+            <a href="#xtsy">&nbsp;&nbsp;&nbsp;系统首页</a>
+        </li>
+
+        <li class="li" id="c2">
+            &nbsp;&nbsp;&nbsp;信息管理
+            <ul>
+<!--                <li><a href="#flxx">分类信息</a></li>-->
+                <li><a href="#essp">二手商品</a></li>
+<!--                <li><a href="#ddxx">订单信息</a></li>-->
+<!--                <li><a href="#qzxx">圈子信息</a></li>-->
+                <li><a href="#sqtz">社区帖子</a></li>
+<!--                <li><a href="#qgxx">求购信息</a></li>-->
+<!--                <li><a href="#ggxx">公告信息</a></li>-->
+                <li><a href="#dzxx">地址信息</a></li>
+<!--                <li><a href="#fkxx">反馈信息</a></li>-->
+                <li><a href="#rental">租赁管理</a></li>
+            </ul>
+        </li>
+
+        <li class="li" id="c3">
+            <a href="#yhgl">&nbsp;&nbsp;&nbsp;用户管理</a>
+        </li>
+        <li class="li" id="c4">
+            <a href="#notice">&nbsp;&nbsp;&nbsp;发布公告</a>
+        </li>
+
+    </ul>
+</nav>
+
+<div id="nei">
+    <div class="nr" id="xtsy">
+        <iframe th:src="@{/status}"  frameborder="0"></iframe>
+    </div>
+<!--    <div class="nr" id="flxx">-->
+<!--        <iframe src=""  frameborder="0"></iframe>-->
+<!--    </div>-->
+    <div class="nr" id="essp">
+        <iframe th:src="@{/productsa}"  frameborder="0"></iframe>
+    </div>
+<!--    <div class="nr" id="ddxx">-->
+<!--        <iframe src=""  frameborder="0"></iframe>-->
+<!--    </div>-->
+<!--    <div class="nr" id="qzxx">-->
+<!--        <iframe src=""  frameborder="0"></iframe>-->
+<!--    </div>-->
+    <div class="nr" id="sqtz">
+        <iframe th:src="@{/posts}"  frameborder="0"></iframe>
+    </div>
+<!--    <div class="nr" id="qgxx">-->
+<!--        <iframe src=""  frameborder="0"></iframe>-->
+<!--    </div>-->
+<!--    <div class="nr" id="ggxx">-->
+<!--        <iframe src=""  frameborder="0"></iframe>-->
+<!--    </div>-->
+    <div class="nr" id="dzxx">
+        <iframe th:src="@{/useraddresses}"  frameborder="0"></iframe>
+    </div>
+<!--    <div class="nr" id="fkxx">-->
+<!--        <iframe src=""  frameborder="0"></iframe>-->
+<!--    </div>-->
+    <div class="nr" id="yhgl">
+        <iframe th:src="@{/users}"  frameborder="0"></iframe>
+    </div>
+    <div class="nr" id="notice">
+        <iframe th:src="@{/notice}"  frameborder="0"></iframe>
+    </div>
+    <div class="nr" id="rental">
+        <iframe th:src="@{/rentalitemsByAdmin}"  frameborder="0"></iframe>
+    </div>
+
+</div>
+
+<script>
+    window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem('scrollPosition', window.scrollY.toString());
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        var scrollPosition = sessionStorage.getItem('scrollPosition');
+        if (scrollPosition !== null) {
+            window.scrollTo(0, parseInt(scrollPosition));
+        }
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>后台管理</title>
+<!--    <script src="../static/js/jquery-3.7.1.js"></script>-->
+<!--    <script th:src="@{/js/productlist.js}"></script>-->
+</head>
+<script th:src="@{/js/jquery-3.7.1.js}"></script>
+<link rel="stylesheet" th:href="@{/css/productlist.css}">
+<body>
+
+<div style="height:100px ">
+    <code class="html"><button onclick="goBack()">返回</button></code>
+    <script>
+        function goBack() {
+            window.history.back();
+
+        }
+    </script></div>
+<!-- 搜索栏 -->
+<div id="bar">
+    <form id="searchForm" action="/searchProductsByStr" method="post">
+        <input type="text" name="searchStr" id="searchStr">
+        <input type="submit" class="search" value="查询">
+        <input type="button" class="reset" value="重置" onclick="resetSearchForm()">
+    </form>
+</div>
+<div id="USER">
+    <img id="touxiang" th:src="${session.loginUser.imgurl}"><br>
+    <span th:text="${session.loginUser.username}"></span>
+</div>
+
+<!--这个就可以实现用户个性化了-->
+<!--<div style="float: left">欢迎，<span th:text="${session.loginUser.username}"></span>,登录！</div>-->
+<!-- 批量删除栏 -->
+<div id="delete">
+    <input type="button" class="deletegoods" value="批量删除" onclick="dels()">
+    <a th:href="@{/addProductByU}" id="add">添加</a>
+</div>
+
+<!-- 二手商品栏 -->
+<div id="goods_list">
+    <table class="tablecss">
+            <tr>
+                <th>选择</th>
+                <th>序号</th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>详细</th>
+                <th>发货地址</th>
+                <th>图片</th>
+                <th>上架日期</th>
+<!--                <th>状态</th>-->
+                <th>分类</th>
+                <th>用户ID</th>
+                <th>所属用户</th>
+                <th>审核状态</th>
+<!--                <th>上架状态</th>-->
+                <th>操作</th>
+            </tr>
+        <tr id="item" th:each="product:${page}">
+            <td><input type="checkbox" class="ids" th:value="${product.id}"></td>
+            <td th:text="${product.id}"></td>
+            <td id="table_name" th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td id="table_description" th:text="${product.introduce}"></td>
+            <td th:text="${product.address}"></td>
+            <td ><img id="imges" th:src="${product.imgurl}" alt="erro"></td>
+            <td th:text="${#dates.format(product.time,'YYYY-MM-dd')}"></td>
+            <td th:text="${product.type}"></td>
+            <td th:text="${product.user_id}"></td>
+            <td th:text="${product.user_id}"></td>
+            <td th:text="${product.state}"></td>
+<!--            <td th:text="${product.price}"></td>-->
+<!--            <td th:text="${product.price}"></td>-->
+            <td id="table_operation">
+                <a class="button_Pass" th:href="@{'/toupdateproduct/'+${product.id}}">编辑</a>
+<!--                <a class="button_refuse" th:href="@{'/toupdateproduct/'+${product.id}}">拒绝</a>-->
+                <a class="button_delete" th:href="@{'/deleteProduct/'+${product.id}}">删除</a>
+            </td>
+        </tr>
+    </table>
+    <br>
+<!--    <a th:if="${not page.isFirstPage}" th:href="@{/products(start=${page.pageNum - 1})}">上一页</a>-->
+<!--    &nbsp;&nbsp;总页数:<span th:text="${page.pages}"></span>&nbsp;-->
+<!--    &nbsp;&nbsp;当前页:<span th:text="${page.pageNum}"></span>&nbsp;-->
+<!--    &nbsp;&nbsp;总记录数:<span th:text="${page.total}"></span>&nbsp;-->
+<!--    &nbsp;&nbsp;当前页记录数:<span th:text="${page.size}"></span>&nbsp;-->
+<!--    <a th:if="${not page.isLastPage}" th:href="@{/products(start=${page.pageNum + 1})}">下一页</a>-->
+</div>
+<script>
+    function dels(){
+        if(confirm("确定删除所选的商品吗?")){
+            var ids="";
+            $(".ids").each(
+                function (i,e){
+                    if($(e).is(":checked")){
+                        var id=$(e).val();
+                        ids+=id+",";
+                    }
+                }
+            );
+            // alert(ids);
+
+            if(ids.length==0){
+                alert("未选择任何用户,请选择删除项");
+            }else{
+                ids=ids.substring(0,ids.length-1);
+                // console.log(ids);
+                // alert(ids);
+                location.href="deleteProducts?id="+ids;//构造出类似deleteBooks?id=1,2,3后台可以用数组接收
+            }
+        }
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.Index_Commodity_Mapper">
+    <select id="selectCommodityByType" parameterType="String" resultMap="selectCommodityByTypeResult">
+        select id,imgurl,introduce,price
+        from product
+        where type=#{commodity_Type} and state="审核通过" and remark="上架"
+    </select>
+    <resultMap id="selectCommodityByTypeResult" type="Index_Commodity">
+        <id property="commodity_id" column="id"></id>
+        <result property="commodity_imgurl" column="imgurl"></result>
+        <result property="commodity_introduce" column="introduce"></result>
+        <result property="commodity_price" column="price"></result>
+
+    </resultMap>
+
+
+    <select id="find_All_Commoditys" resultMap="find_All_Commoditys_Result">
+        select * from product
+        where  state="审核通过" and remark="上架"
+    </select>
+    <resultMap id="find_All_Commoditys_Result" type="Index_Commodity">
+        <id property="commodity_id" column="id"></id>
+        <result property="commodity_imgurl" column="imgurl"></result>
+        <result property="commodity_introduce" column="introduce"></result>
+        <result property="commodity_price" column="price"></result>
+
+    </resultMap>
+
+
+    <select id="find_All_Commoditys_ByStr" parameterType="java.lang.String" resultMap="www">
+        select * from product
+        where 1=1 and remark="上架"
+        <if  test="searchStr!=null and searchStr!=''">
+
+            and name like concat('%',#{searchStr},'%')
+            or price like concat('%',#{searchStr},'%')
+            or introduce like concat('%',#{searchStr},'%')
+            or id like concat('%',#{searchStr},'%')
+            or type like concat('%',#{searchStr},'%')
+            or address like concat('%',#{searchStr},'%')
+
+        </if>
+    </select>
+    <resultMap id="www" type="Index_Commodity">
+        <id property="commodity_id" column="id"></id>
+        <result property="commodity_name" column="name"></result>
+        <result property="commodity_introduce" column="introduce"></result>
+
+        <result property="commodity_type" column="type"></result>
+        <result property="commodity_address" column="address"></result>
+        <result property="commodity_price" column="price"></result>
+
+    </resultMap>
+
+
+</mapper>

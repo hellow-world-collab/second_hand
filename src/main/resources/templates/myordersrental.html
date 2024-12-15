@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的租购订单</title>
+    <link rel="stylesheet" th:href="@{/css/myorders.css}">
+</head>
+<body>
+    <header>
+        <div id="top_div">
+
+            <!--          头部左盒子  //主标志往左边靠-->
+            <div id="left_div">
+                <div id="main_mark">
+                    <img class="logo" th:src="@{/img/logo.png}" alt="logo">
+                </div>
+            </div>
+            <!--          头部左盒子  //主标志往左边靠-->
+
+
+
+            <!--导航栏部分-->
+            <div id="nav_div">
+
+                <ul id="nav_ul">
+                    <li>热卖专区</li>
+                    <li>社区广场</li>
+                    <li>求购专区</li>
+                    <li>二手交易圈</li>
+<!--                    <li>系统公告</li>-->
+                </ul>
+            </div>
+            <!--导航栏部分-->
+
+            <!--      头部右盒子      //信息和个人中心往右边靠-->
+            <div id="right_div">
+
+                <!--                聊天信息-->
+<!--                <div id="chat_div">-->
+<!--                    <span>-->
+<!--                        <img th:src="@{/icon/通信消息.png}" alt="">-->
+<!--                    </span>-->
+<!--                    聊天信息-->
+
+<!--                </div>-->
+                <!--                聊天信息-->
+
+                <!--                个人中心-->
+                <div id="personal_center_div">
+                    <span>
+                        <img th:src="${session.loginUser.imgurl}" alt="头像">
+                        <ul id="dropdown_nav">
+                                <div id="conule"></div>
+                                <li class="li">个人中心</li>
+                                <li class="li">我的订单</li>
+                                <li class="li"><a  th:href="@{/myproducts}">我的商品</a></li>
+                                <li class="li"><a  th:href="@{/Myposts}">我的帖子</a></li>
+                                <li class="li">我的求购</li>
+                                <li class="li"><a  th:href="@{/useraddressesU}">我的地址</a></li>
+
+                                <li class="li">退出登录</li>
+                        </ul>
+
+                    </span>
+                    用户
+                    <img th:src="@{/icon/angle-down.png}" alt="">
+
+                </div>
+                <!--                个人中心-->
+
+
+            </div>
+
+
+            <!--      头部右盒子      //信息和个人中心往右边靠-->
+        </div>
+
+    </header>
+
+
+
+    <section>
+        <div id="s_left_div"></div>
+
+
+
+
+        <div id="s_center_div">
+            <div id="top_button">
+                <span id="buy_span">我的购买订单</span>
+                <span id="sale_span">我的售出订单</span>
+                <span id="buy_span_rental">我的租购订单</span>
+                <span id="sale_span_rental">我的租售订单</span>
+            </div>
+            <div id="orders_list">
+                <table>
+                    <tr>
+                        <th>商品名称</th>
+                        <th>商品图片</th>
+                        <th>订单编号</th>
+                        <th>总价</th>
+<!--                        <th>下单时间</th>-->
+                        <th>售货人姓名</th>
+                        <th>收货地址</th>
+                        <th>发货地址</th>
+                        <th>卖家联系方式</th>
+                        <th>订单状态</th>
+                        <th colspan="2">操作</th>
+                    </tr>
+                    <tr th:each="order:${page.list}">
+                        <td  th:text="${order.product.name}">222</td>
+                        <td><img th:src="${order.product.imgurl}" alt="未找到图片请联系商家看图"></td>
+                        <td th:text="${order.order_number}">444</td>
+                        <td th:text="${order.product.price}">未支付</td>
+<!--                        <td th:text="${#dates.format(order.product.time,'yyyy-mm-dd')}">5555</td>-->
+                        <td th:text="${order.sale_user.username}">6666</td>
+                        <td th:text="${order.buy_user.address}">777</td>
+                        <td th:text="${order.product.address}">8888</td>
+                        <td th:text="${order.sale_user.phone}">9999</td>
+                        <td th:text="${order.order_state}">9999</td>
+
+<!--                        <td th:text="${order.product.price}">00000</td>-->
+<!--                        <td th:text="${order.product.price}">00000</td>-->
+                        <td id="table_operation">
+<!--                            未完成去支付-->
+                            <input type="hidden" id="oname" th:value="${order.product.name}">
+                            <input type="hidden" id="onumber" th:value="${order.order_number}">
+                            <input type="hidden" id="oprice" th:value="${order.product.price}">
+                            <input type="hidden" id="oid" th:value="${order.order_id}">
+                            <input type="hidden" id="pid" th:value="${order.product.id}">
+<!--                            <button class="button_topay" onclick="pay()">支付</button>-->
+                            <a class="button_topay" th:href="@{'http://localhost:8080/alipay/payai?subject='+${order.product.name}+'&traceNo='+${order.order_number}+ '&totalAmount=' +${order.product.price}+'&orderid='+${order.order_id}+'&productid='+${order.product.id}+'&falge='+${order.falge}}">支付</a>
+
+                            <!--                            <a class="button_topay" >去支付</a>-->
+                            <a class="button_delete" th:href="@{'/deleteorder/'+${order.order_id}}">删除订单</a>
+                        </td>
+                    </tr>
+                </table>
+                <div id="page_button">
+                    <div id="order_num" th:text="'共'+${page.total}+'条'">共条</div>
+                    <input type="hidden" th:value="${page.pages}" id="page_total">
+                    <input type="hidden" th:value="${page.pageNum}" id="page_num">
+                    <a th:href="@{/myorders(start=${page.pageNum -1})}" id="left_a">
+                        <div id="left_button"><img th:src="@{/icon/angle-left.png}" alt=""></div>
+                    </a>
+                    <div id="center_page_button">
+                    <ul id="append_li">
+<!--                        <li class="pageli">1</li>-->
+
+
+                    </ul>
+                    </div>
+                    <a  th:href="@{/myorders(start=${page.pageNum+1})}" id="right_a">
+                        <div id="right_button"><img th:src="@{/icon/angle-right.png}" alt=""></div>
+                    </a>
+
+<!--                    <a th:if="${not page.isFirstPage}" th:href="@{/myorders(start=${page.pageNum -1})}">上一页</a>-->
+<!--                    &nbsp;&nbsp;总页数: <span th:text="${page.pages}"></span>&nbsp;-->
+<!--                    &nbsp;&nbsp;当前页: <span th:text="${page.pageNum}"></span>&nbsp;-->
+<!--                    &nbsp;&nbsp;总记录数: <span th:text="${page.total}"></span>&nbsp;-->
+<!--                    &nbsp;&nbsp;当前页记录数: <span th:text="${page.size}"></span>&nbsp;-->
+<!--                    <a th:if="${not page.isLastPage}" th:href="@{/myorders(start=${page.pageNum+1})}">下一页</a>-->
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div id="s_right_div"></div>
+    </section>
+
+    <footer>
+
+    </footer>
+
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.7.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/myorders.js}"></script>
+<!--http://localhost:8888/alipay/payai?subject="+${order.product.name}+"&traceNo="order.getOrder_number() + "&totalAmount=" + order.getOrder_price()+"&orderid="+order_id+"&productid="+product_id"-->
+<!--<script>-->
+<!--    function pay(){-->
+<!--        var oname = document.getElementById("oname").value;-->
+<!--        var onumber = document.getElementById("onumber").value;-->
+<!--        var oprice = document.getElementById("oprice").value;-->
+<!--        var oid = document.getElementById("oid").value;-->
+<!--        var pid = document.getElementById("pid").value;-->
+<!--        window.open("http://localhost:8888/alipay/payai?subject="+oname+"&traceNo="+onumber+ "&totalAmount=" + oprice+"&orderid="+oid+"&productid="+pid)-->
+<!--    }-->
+<!--</script>-->
+</html>

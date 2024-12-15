@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改地址</title>
+    <link rel="stylesheet" th:href="@{/css/updateuseraddress.css}">
+</head>
+<body>
+<h1>修改地址</h1>
+<code class="html"><button onclick="goBack()">返回</button></code>
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>
+<form th:action="@{/updateuseraddressU}" method="post">
+<table border="1" align="center">
+    <input type="hidden" name="id" th:value="${useradd.id}">
+    <tr>
+        <td>联系人</td>
+        <td><input type="text" name="username" th:value="${useradd.username}"></td>
+    </tr>
+    <tr>
+        <td>联系地址</td>
+        <td><input type="text" name="address" th:value="${useradd.address}"></td>
+    </tr>
+    <tr>
+        <td>联系电话</td>
+        <td><input type="text" name="phone" th:value="${useradd.phone}"></td>
+    </tr>
+    <tr>
+        <td>关联用户</td>
+        <td><input type="text" name="userid" th:value="${useradd.userid}"></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><input type="submit" name="" id="" value="提交"></td>
+
+    </tr>
+</table>
+</form>
+</body>
+</html>

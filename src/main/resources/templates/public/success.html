@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>成功提示页面</title>
+</head>
+<style type="text/css">
+    img{
+        width:150px;
+        height: 150px;
+    }
+</style>
+<body>
+<h1>操作成功</h1>
+<h1 th:text="'后台传递信息是:'+${msg}"></h1><br>
+<img th:src="${msg.imgurl}">
+<a href="/login">返回首页</a>
+</body>
+</html>

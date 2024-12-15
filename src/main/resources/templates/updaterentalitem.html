@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改租赁二手物品</title>
+    <link rel="stylesheet" th:href="@{/css/updaterentalitem.css}">
+</head>
+<body>
+<h1>修改租赁二手物品</h1>
+<code class="html"><button onclick="goBack()">返回</button></code>
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>
+<form th:action="@{/updateRentalItem}" method="post" enctype="multipart/form-data">
+<table border="1" align="center">
+    <tr>
+        <td>编号</td>
+        <td><input type="text" name="id" th:value="${item.id}" readonly></td>
+    </tr>
+    <tr>
+        <td>名称</td>
+        <td><input type="text" name="name" th:value="${item.name}"></td>
+    </tr>
+    <tr>
+        <td>价格/天</td>
+        <td><input type="text" name="price_one_day" th:value="${item.price_one_day}"></td>
+    </tr>
+    <tr>
+        <td>押金</td>
+        <td><input type="text" name="deposit" th:value="${item.deposit}"></td>
+    </tr>
+    <tr>
+        <td>商品图片</td>
+        <td><input type="file" name="imges" th:value="${item.imgurl}"></td>
+    </tr>
+    <tr>
+        <td>类别</td>
+        <td>
+            <input type="hidden" id="selectvalue" th:value="${item.type}">
+            <select name="type" id="type" th:checked="${item.type}">
+                <option value="图书">图书</option>
+                <option value="数码产品">数码产品</option>
+                <option value="生活用品">生活用品</option>
+                <option value="娱乐产品">娱乐产品</option>
+                <option value="食物">食物</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>上架时间</td>
+        <td><input type="date" name="time" th:value="${#dates.format(item.time,'YYYY-MM-dd')}"></td>
+    </tr>
+    <tr>
+        <td>卖家ID</td>
+        <td><input type="text" name="user_id" th:value="${item.user_id}"></td>
+    </tr>
+    <tr>
+        <td>标题</td>
+        <td><input type="text" name="title" th:value="${item.title}"></td>
+    </tr>
+    <tr>
+        <td>介绍</td>
+        <td><textarea class="txt" cols="30" rows="10" name="introduce" th:value="${item.introduce}">[[${item.introduce}]]</textarea></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><input type="submit" name="" id="" value="提交"></td>
+
+    </tr>
+</table>
+</form>
+<script src="js/jquery-3.7.1.js"></script>
+<script>
+    var backendValue = document.getElementById("selectvalue").value; // 后端传递的值
+    var select = document.getElementById("type"); // 获取select元素
+    for (var i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === backendValue) {
+            select.options[i].selected = true; // 选中匹配的option
+            break;
+        }
+    }
+</script>
+</body>
+</html>

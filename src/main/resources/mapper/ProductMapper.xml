@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.ProductMapper">
+<!--    查找全部物品-->
+<!--    <select id="findAllProducts" resultType="Product">-->
+<!--        select *-->
+<!--        from product-->
+<!--    </select>-->
+    <select id="findAllProducts" resultType="product" resultMap="AllProducts">
+        SELECT p.id,p.name,p.price,p.introduce,p.address,p.imgurl,p.time,p.state,p.type,p.user_id,u.username,p.remark
+        FROM product p
+                 JOIN users u ON p.user_id = u.id
+    </select>
+    <resultMap id="AllProducts" type="product">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="price" column="price"></result>
+        <result property="introduce" column="introduce"></result>
+        <result property="address" column="address"></result>
+        <result property="imgurl" column="imgurl"></result>
+        <result property="time" column="time"></result>
+        <result property="state" column="state"></result>
+        <result property="type" column="type"></result>
+        <result property="user_id" column="user_id"></result>
+        <result property="user_name" column="username"></result>
+        <result property="remark" column="remark"></result>
+    </resultMap>
+<!--查找某个用户的商品-->
+    <select id="findProductByUid" resultType="Product">
+        select * from product where user_id=#{id}
+    </select>
+<!--    根据id删除二手物品-->
+    <delete id="deleteProduct" parameterType="int">
+        delete from product where id=#{id}
+    </delete>
+
+    <!--全局模糊搜索-->
+    <select id="searchProductsByStr" parameterType="java.lang.String" resultType="product">
+        select * from product
+        where 1=1
+        <if test="searchStr!=null and searchStr!=''">
+            AND name like concat('%',#{searchStr},'%')
+            OR price like concat('%',#{searchStr},'%')
+            OR id like concat('%',#{searchStr},'%')
+            OR imgurl like concat('%',#{searchStr},'%')
+            OR type like concat('%',#{searchStr},'%')
+            OR time like concat('%',#{searchStr},'%')
+            OR user_id like concat('%',#{searchStr},'%')
+            OR title like concat('%',#{searchStr},'%')
+            OR introduce like concat('%',#{searchStr},'%')
+        </if>
+    </select>
+    <!--全局模糊搜索  用户页面-->
+    <select id="searchProductsIDByStr" resultType="product">
+        select * from product
+        where user_id=#{id}
+        <if test="searchStr!=null and searchStr!=''"> and  ( name like concat('%',#{searchStr},'%')
+            OR price like concat('%',#{searchStr},'%')
+            OR id like concat('%',#{searchStr},'%')
+            OR imgurl like concat('%',#{searchStr},'%')
+            OR type like concat('%',#{searchStr},'%')
+            OR time like concat('%',#{searchStr},'%'))
+            OR title like concat('%',#{searchStr},'%')
+            OR introduce like concat('%',#{searchStr},'%')
+        </if>
+    </select>
+    <!--批量删除二手物品-->
+    <delete id="deleteProducts">
+        delete from product where id in
+            <foreach collection="array" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </delete>
+    <select id="findProductByid" resultType="Product" parameterType="Integer">
+        select * from product where id=#{id}
+    </select>
+
+    <update id="updateProduct" parameterType="Product">
+        update product set name=#{name},price=#{price},type=#{type},time=#{time},imgurl=#{imgurl},title=#{title},introduce=#{introduce} where id=#{id}
+    </update>
+    <update id="updateProductimgnull" parameterType="Product">
+        update product set name=#{name},price=#{price},type=#{type},time=#{time},title=#{title},introduce=#{introduce} where id=#{id}
+    </update>
+<!--    增加商品-->
+    <insert id="addProduct" parameterType="Product">
+        insert into product(name,price,imgurl,type,time,user_id,title,introduce,address) values (#{name},#{price},#{imgurl},#{type},#{time},#{user_id},#{title},#{introduce},#{address})
+    </insert>
+    <update id="updateProductmark">
+        update product set remark="下架" where id=#{id}
+    </update>
+</mapper>
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书详情</title>
+    <link rel="stylesheet" th:attr="href=@{/css/rentalitembyuser.css}">
+</head>
+<body>
+<code class="html"><button onclick="goBack()">返回</button></code>
+
+<div class="container">
+    <div class="product">
+        <div class="product-image">
+            <img th:src="${item.imgurl}" alt="">
+        </div>
+        <div class="product-details">
+            <h2 class="product-title" th:utext="${item.name}">名称</h2>
+            <p class="product-price" th:utext="'￥'+${item.price_one_day}">价格</p>
+            <p class="product-description" th:utext="${item.introduce}">商品描述</p>
+
+            <div class="product-actions">
+                <form action="/payrental" method="post">
+                    <input type="hidden" name="id" th:value="${item.id}">
+                    请输入租赁天数<input type="text" name="date">
+                    <input type="submit" class="btn btn-secondary" value="立即购买">
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>
+</body>
+</html>

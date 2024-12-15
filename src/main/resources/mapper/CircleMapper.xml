@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cupk.mapper.CircleMapper">
+
+    <resultMap id="CircleResultMap" type="com.cupk.pojo.Circle">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="circleImgurl" column="circle_imgurl"/>
+        <result property="userId" column="user_id"/>
+        <result property="description" column="description"/>
+        <association property="user" javaType="com.cupk.pojo.User">
+            <id property="id" column="user_id"/>
+            <result property="username" column="username"/>
+            <result property="imgurl" column="user_imgurl"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllCircles" resultMap="CircleResultMap">
+        SELECT c.id, c.title, c.circle_imgurl, c.user_id, c.description,
+               u.id AS user_id, u.username, u.imgurl as user_imgurl
+        FROM circle c
+                 LEFT JOIN users u ON c.user_id = u.id
+    </select>
+
+</mapper>
