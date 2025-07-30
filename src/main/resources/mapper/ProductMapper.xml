@@ -31,6 +31,13 @@
     <select id="findProductByUid" resultType="Product">
         select * from product where user_id=#{id}
     </select>
+<!--    批量查找商品-->
+    <select id="findProductByids" resultType="Product">
+        select * from product where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 <!--    根据id删除二手物品-->
     <delete id="deleteProduct" parameterType="int">
         delete from product where id=#{id}

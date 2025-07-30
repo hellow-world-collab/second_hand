@@ -115,7 +115,11 @@
         </div>
 <!--        搜索框部分-->
     </header>
-
+    <div id="recommendation_section" style="margin-top: 40px;">
+        <h2>为你推荐</h2>
+        <div id="recommendation_list" class="commodity_grid">
+        </div>
+    </div>
     <section>
         <div id="s_left_div"></div>
 
@@ -227,7 +231,49 @@
 
     <script type="text/javascript" th:src="@{/js/jquery-3.7.1.js}" charset="UTF-8"></script>
     <script type="text/javascript" th:src="@{/js/index.js}" charset="UTF-8"></script>
+<script type="text/javascript">
+    // 当文档加载完成后执行
+    $(document).ready(function() {
+        // 发起AJAX请求获取推荐数据
+        $.ajax({
+            url: '/api/recommend', // 请求我们新建的Java Controller接口
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ n: 10 }), // 请求10个推荐商品
+            success: function(products) {
+                // 请求成功后，处理返回的商品列表
+                if (products && products.length > 0) {
+                    $('#recommendation_section').show(); // 显示推荐区域
+                    var recommendationList = $('#recommendation_list');
+                    recommendationList.empty(); // 清空旧内容
 
+                    products.forEach(function(product) {
+                        // 修正：使用后端 Product.java 中定义的实际字段名 (id, imgurl, introduce, price)
+                        // 这样可以正确地从返回的JSON对象中获取数据。
+                        // HTML结构和CSS类名保持与主页商品一致，以确保样式统一。
+                        var productHtml = `
+                            <div class="commodity">
+                                <a href="/commodityDetail/${product.id}">
+                                    <div class="commodity_img"><img src="${product.imgurl}" alt="商品图片"></div>
+                                    <div class="commodity_introduce">${product.title}</div>
+                                    <div class="commodity_price"><span>￥${product.price}</span></div>
+                                </a>
+                            </div>
+                        `;
+                        recommendationList.append(productHtml);
+                    });
+                } else {
+                    // 如果没有推荐商品，就隐藏该区域
+                    $('#recommendation_section').hide();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("获取推荐商品失败:", error);
+                $('#recommendation_section').hide();
+            }
+        });
+    });
+</script>
 
 
 </html>

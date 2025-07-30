@@ -57,6 +57,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findProductByids(List<Integer> ids) {
+        return productMapper.findProductByids(ids);
+    }
+
+    @Override
     public Product findProductByid(Integer id) {
         return productMapper.findProductByid(id);
     }

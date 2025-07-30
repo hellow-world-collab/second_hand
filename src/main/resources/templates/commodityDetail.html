@@ -100,7 +100,11 @@
         </div>
 <!--        商品购买部分-->
     </header>
-
+    <section id="similar-items-section">
+        <h2>猜你喜欢</h2>
+        <div id="similar-items-list">
+        </div>
+    </section>
     <section>
         <div id="s_left_div"></div>
 
@@ -217,6 +221,59 @@
     <script type="text/javascript" th:src="@{/js/jquery-3.7.1.js}" charset="UTF-8"></script>
     <script type="text/javascript" th:src="@{/js/index.js}" charset="UTF-8"></script>
     <script type="text/javascript" th:src="@{/js/commodityDetail.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // 1. 从隐藏输入框中获取当前页面的商品ID
+        var currentProductId = $('#commodity_id').val();
+
+        // 确保我们成功获取了ID
+        if (currentProductId) {
+            // 2. 准备发送给后端的数据，这次带上了 product_id
+            var requestData = {
+                product_id: parseInt(currentProductId), // 将ID作为上下文传给推荐系统
+                n: 5 // 请求5个相关商品（详情页不需要太多）
+            };
+
+            // 3. 发起AJAX请求
+            $.ajax({
+                url: '/api/recommend',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: function(products) {
+                    if (products && products.length > 0) {
+                        $('#similar-items-section').show(); // 显示推荐区域
+                        var similarItemsList = $('#similar-items-list');
+                        similarItemsList.empty(); // 清空旧内容
+
+                        products.forEach(function(product) {
+                            // 关键一步：过滤掉当前正在浏览的商品本身
+                            if (product.id != currentProductId) {
+                                // 使用与首页一致的HTML结构和class，以复用样式
+                                var productHtml = `
+                                <div class="commodity">
+                                    <a href="/commodityDetail/${product.id}">
+                                        <div class="commodity_img"><img src="${product.imgurl}" alt="商品图片"></div>
+                                        <div class="commodity_introduce">${product.title}</div>
+                                        <div class="commodity_price"><span>￥${product.price}</span></div>
+                                    </a>
+                                </div>
+                            `;
+                                similarItemsList.append(productHtml);
+                            }
+                        });
+                    } else {
+                        $('#similar-items-section').hide(); // 如果没有推荐，就隐藏该区域
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("获取相似商品失败:", error);
+                    $('#similar-items-section').hide();
+                }
+            });
+        }
+    });
+</script>
 
 <script>
 

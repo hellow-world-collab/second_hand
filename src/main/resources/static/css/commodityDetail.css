@@ -777,3 +777,76 @@ footer{
     }
 
 }
+/* --- 猜你喜欢模块样式 --- */
+#similar-items-section {
+    width: 80%; /* 限制宽度，使其在页面中居中显示 */
+    max-width: 1200px; /* 设置最大宽度 */
+    margin: 40px auto; /* 上下40px外边距，左右自动（实现居中） */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+#similar-items-section h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 22px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* 推荐商品列表的网格布局 */
+#similar-items-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* 商品之间的间距 */
+}
+
+/* 单个商品的样式 (直接复用首页的样式类，但可以微调) */
+#similar-items-list .commodity {
+    width: 200px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #fff;
+    text-decoration: none;
+    color: #333;
+}
+
+#similar-items-list .commodity:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#similar-items-list .commodity .commodity_img {
+    width: 200px;
+    height: 200px;
+}
+
+#similar-items-list .commodity .commodity_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 确保图片不变形 */
+}
+
+#similar-items-list .commodity .commodity_introduce {
+    padding: 8px 10px;
+    height: 40px; /* 限制2行高度 */
+    font-size: 14px;
+    line-height: 1.4;
+    overflow: hidden;
+}
+
+#similar-items-list .commodity .commodity_price {
+    padding: 0 10px 10px 10px;
+    text-align: center;
+}
+
+#similar-items-list .commodity .commodity_price span {
+    color: #ff5722; /* 价格用醒目的颜色 */
+    font-size: 18px;
+    font-weight: bold;
+}

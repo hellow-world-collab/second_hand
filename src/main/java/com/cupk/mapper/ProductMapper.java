@@ -3,6 +3,7 @@ package com.cupk.mapper;
 import com.cupk.pojo.Product;
 import org.apache.ibatis.annotations.Mapper;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Mapper
@@ -12,6 +13,7 @@ public interface ProductMapper {
     public List<Product>searchProductsByStr(String searchStr);//全局模糊查询二手物品
     public void deleteProducts(int[] id);//批量删除二手物品
     public Product findProductByid(Integer id);//编辑商品的查找
+    public List<Product> findProductByids(List<Integer> ids);// 用推荐系统返回的商品id查询
     public Integer updateProduct(Product product);
     public Integer updateProductimgnull(Product product);
     public List<Product> findProductByUid(Integer id);

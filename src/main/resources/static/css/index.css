@@ -729,3 +729,90 @@ iframe{
 #close:hover{
     background-color: #62a39f;
 }
+/* --- 为你推荐模块专属样式 --- */
+
+/* 推荐模块的总容器样式 */
+#recommendation_section {
+    width: 100%;
+    margin-top: 40px;
+    padding: 20px 0; /* 上下留出间距 */
+    background-color: #ffffff; /* 给推荐区域一个白色背景，与主区域区分 */
+    box-shadow: 0 0 5px 5px #c8c6c6; /* 沿用主内容的阴影样式 */
+    border-radius: 10px; /* 沿用主内容的圆角样式 */
+    margin-bottom: 20px; /* 和下面的footer留出距离 */
+}
+
+#recommendation_section h2 {
+    text-align: center; /* 标题居中 */
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* 推荐商品列表的网格布局核心 */
+#recommendation_list {
+    display: flex; /* 启用Flexbox布局，这是实现居中和换行的关键 */
+    flex-wrap: wrap; /* 允许商品换行 */
+    justify-content: center; /* 水平居中排列所有商品 */
+    gap: 25px; /* 设置商品之间的间距 */
+    padding: 0 20px; /* 左右留出一些内边距，避免商品贴边 */
+}
+
+/* 推荐区域内单个商品的样式 */
+#recommendation_list .commodity {
+    width: 200px; /* 设置每个商品容器的宽度与图片一致 */
+    height: auto; /* 高度自适应内容 */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden; /* 隐藏溢出的部分，确保圆角效果 */
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #fff;
+    /* 移除原有的 float 和 margin，因为Flexbox会处理布局 */
+    float: none;
+    margin: 0;
+}
+
+#recommendation_list .commodity:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 推荐区域内商品图片的样式 */
+#recommendation_list .commodity .commodity_img {
+    width: 200px;  /* 严格限制图片容器宽度 */
+    height: 200px; /* 严格限制图片容器高度 */
+}
+
+#recommendation_list .commodity .commodity_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 这是关键！图片会自动裁剪以适应200x200的容器，不变形 */
+}
+
+/* 推荐区域内商品介绍和价格的样式 */
+#recommendation_list .commodity .commodity_introduce,
+#recommendation_list .commodity .commodity_price {
+    padding: 10px;
+    text-align: left; /* 文字左对齐可能更好看 */
+}
+
+#recommendation_list .commodity .commodity_introduce {
+    height: 60px; /* 给描述一个固定高度，防止长短不一破坏布局 */
+    font-size: 14px;
+    color: #555;
+    /* 多行文字溢出显示省略号 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 最多显示3行 */
+    -webkit-box-orient: vertical;
+}
+
+#recommendation_list .commodity .commodity_price {
+    text-align: center; /* 价格居中 */
+    font-weight: bold;
+    height: auto;
+}
+#recommendation_list .commodity .commodity_price span {
+    font-size: 20px; /* 调整价格字体大小 */
+}

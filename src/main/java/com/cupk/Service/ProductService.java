@@ -11,6 +11,7 @@ public interface ProductService {
     public void deleteProduct(Integer id);//删除二手物品
     public List<Product>searchProductsByStr(String searchStr);//全局模糊查询二手物品
     public void deleteProducts(int[] id);//批量删除二手物品
+    public List<Product> findProductByids(List<Integer> ids);// 用推荐系统返回的商品id查询
     public Product findProductByid(Integer id);//编辑商品的查找
     public Integer updateProduct(Product product);
     public Integer updateProductimgnull(Product product);
